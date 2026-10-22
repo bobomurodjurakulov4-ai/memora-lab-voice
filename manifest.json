@@ -1,0 +1,12 @@
+
+{
+  "name": "MEMORA LAB",
+  "short_name": "MEMORA LAB",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#10152c",
+  "theme_color": "#10152c",
+  "description": "MEMORA LAB — ovozli muloqot va interaktiv o‘rganish ilovasi."
+}
