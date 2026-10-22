@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10152c"><title>MEMORA LAB — Xotira sarguzashti</title>
+<style>
+:root{--ink:#f6f7ff;--muted:#b9c1e3;--glass:#ffffff13;--line:#ffffff24;--accent:#b5a8ff;--good:#7ef0c1;--bad:#ff91a8}
+*{box-sizing:border-box}html{min-height:100%;background:#10152c}body{margin:0;min-height:100vh;color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:#10152c;overflow-x:hidden}
+button{font:inherit;cursor:pointer;border:0}button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#scene{position:fixed;inset:0;z-index:-3;overflow:hidden;background:radial-gradient(ellipse at 15% 20%,#483c9a 0,transparent 42%),radial-gradient(ellipse at 85% 70%,#126a83 0,transparent 45%),linear-gradient(135deg,#10152c,#171d46 55%,#0b2d46);transition:background 1s ease}
+#scene:before,#scene:after{content:"";position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(70px);opacity:.23;animation:drift 18s ease-in-out infinite alternate;background:#8b72ff;top:-20%;left:-10%}
+#scene:after{width:45vmax;height:45vmax;left:auto;right:-10%;top:45%;background:#36d8d2;animation-duration:23s;animation-direction:alternate-reverse}
+@keyframes drift{to{transform:translate(13vw,12vh) scale(1.18)}}
+#stars{position:absolute;inset:0;width:100%;height:100%;opacity:.75}
+.shell{width:min(1120px,100%);margin:auto;padding:18px 20px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 26px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:950;letter-spacing:.1em;font-size:14px}.logo{display:grid;place-items:center;width:43px;height:43px;border-radius:15px;background:linear-gradient(135deg,#a99cff,#5c55e8);box-shadow:0 7px 25px #8170ff55;font-size:22px}
+.topright{display:flex;gap:8px;align-items:center}.pill{border:1px solid var(--line);background:#ffffff0e;padding:9px 12px;border-radius:99px;font-size:12px;color:#e9eaff;backdrop-filter:blur(10px)}
+h1{font-size:clamp(28px,5vw,48px);line-height:1.04;letter-spacing:-.045em;margin:0 0 10px}h2{font-size:21px;margin:0}p{line-height:1.6}.muted{color:var(--muted)}.hero{display:flex;justify-content:space-between;align-items:end;gap:22px;margin-bottom:24px}.eyebrow{text-transform:uppercase;letter-spacing:.17em;color:#c7c0ff;font-size:11px;font-weight:850;margin-bottom:12px}.hero p{max-width:620px;color:var(--muted);margin:0}.levelbox{min-width:135px;padding:15px;border:1px solid var(--line);border-radius:18px;background:#ffffff0c;backdrop-filter:blur(12px)}.levelbox strong{font-size:23px;display:block}.progress{height:5px;background:#ffffff20;border-radius:9px;overflow:hidden;margin-top:9px}.progress span{display:block;height:100%;background:linear-gradient(90deg,#a49aff,#63e7d5);width:25%;transition:width .4s}
+.world{border:1px solid var(--line);border-radius:28px;padding:23px;background:linear-gradient(135deg,#ffffff18,#ffffff07);box-shadow:0 24px 80px #0002;backdrop-filter:blur(17px);position:relative;overflow:hidden}.world:before{content:"";position:absolute;right:-35px;top:-75px;width:240px;height:240px;border-radius:50%;border:1px solid #ffffff17;box-shadow:0 0 0 28px #ffffff08,0 0 0 58px #ffffff05;pointer-events:none}.worldtop{display:flex;align-items:center;justify-content:space-between;gap:14px;position:relative}.worldname{display:flex;align-items:center;gap:13px}.worldicon{width:59px;height:59px;display:grid;place-items:center;font-size:30px;border-radius:19px;background:#ffffff18;border:1px solid #ffffff20}.world h2{font-size:23px}.worlddesc{margin:7px 0 0;color:var(--muted);font-size:13px}.worldmeta{display:flex;gap:7px;flex-wrap:wrap;margin-top:17px}.tag{border:1px solid #ffffff1e;background:#ffffff0b;padding:6px 9px;border-radius:8px;font-size:11px;color:#e0e4ff}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:28px 0 13px}.sectionhead p{font-size:12px;margin:0;color:var(--muted)}
+.games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.game{position:relative;text-align:left;color:var(--ink);min-height:180px;padding:18px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(145deg,#ffffff16,#ffffff08);backdrop-filter:blur(12px);transition:transform .22s,border-color .22s,background .22s;overflow:hidden}.game:hover{transform:translateY(-4px);border-color:#c3baff88;background:linear-gradient(145deg,#ffffff25,#ffffff0d)}.game:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;right:-45px;bottom:-58px;background:var(--glow,#8372ff);opacity:.18;filter:blur(6px)}.gameico{font-size:31px;display:block;margin-bottom:17px}.game h3{font-size:15px;margin:0 0 6px}.game p{font-size:12px;color:var(--muted);margin:0 0 15px;max-width:250px}.gamefoot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#d8d9ff}.playarr{font-size:18px;color:#c9c1ff}
+.bottomrow{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:17px}.mini-panel{border:1px solid var(--line);background:#ffffff0b;border-radius:18px;padding:17px;backdrop-filter:blur(12px)}.mini-panel h3{margin:0 0 10px;font-size:14px}.dailylist{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.daydot{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;font-size:11px;border:1px solid var(--line);color:var(--muted)}.daydot.done{background:#7ef0c125;border-color:#7ef0c166;color:var(--good)}.daily-note{font-size:12px;color:var(--muted);margin:11px 0 0}.streak{font-size:24px;font-weight:900}.btn{padding:12px 16px;border-radius:12px;color:#191b3a;font-weight:850;background:linear-gradient(135deg,#d2cbff,#8fece1);box-shadow:0 8px 25px #7e72ff2a}.btn:hover{filter:brightness(1.06)}.btn.secondary{background:#ffffff12;border:1px solid var(--line);color:#fff;box-shadow:none}.tiny{font-size:11px;color:var(--muted);margin-top:25px;text-align:center}
+.overlay{position:fixed;inset:0;background:#070b1bd9;z-index:20;display:grid;place-items:center;padding:14px;backdrop-filter:blur(12px)}.modal{width:min(720px,100%);max-height:94dvh;overflow:auto;background:linear-gradient(145deg,#202852,#141a38);border:1px solid #ffffff24;border-radius:24px;padding:22px;box-shadow:0 30px 100px #0007;animation:appear .25s ease-out}.modalhead{display:flex;justify-content:space-between;align-items:start;gap:12px}.modalhead h2{font-size:23px}.close{width:37px;height:37px;border-radius:11px;background:#ffffff14;color:#fff;font-size:20px}.instruction{color:var(--muted);font-size:13px;margin:12px 0 18px}.gamearea{border:1px solid #ffffff1b;background:#0b1027a6;border-radius:18px;padding:18px;min-height:210px;display:grid;place-items:center}.gamebuttons{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:16px}.timerbar{height:6px;background:#ffffff18;border-radius:9px;overflow:hidden;margin:13px 0}.timerbar span{display:block;height:100%;width:100%;background:linear-gradient(90deg,#b8aaff,#69e6d7);transition:width .1s linear}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(65px,95px));gap:9px;justify-content:center}.tile{aspect-ratio:1;border:1px solid #ffffff27;background:#ffffff0c;color:#fff;border-radius:14px;font-size:24px;transition:all .15s}.tile.target{background:#a69aff3d;border-color:#b7adff;box-shadow:inset 0 0 20px #a69aff22}.tile.chosen{background:#7ef0c12a;border-color:#7ef0c1;color:#7ef0c1}.tile.wrong{background:#ff91a82a;border-color:#ff91a8;animation:shake .25s}
+@keyframes shake{25%,75%{transform:translateX(-3px)}50%{transform:translateX(3px)}}@keyframes appear{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(50px,80px));gap:8px;justify-content:center}.memorycard{aspect-ratio: .85;border-radius:13px;border:1px solid #ffffff2b;background:linear-gradient(145deg,#4b4d91,#282e61);color:white;font-size:25px;transition:transform .2s,background .2s}.memorycard.open,.memorycard.matched{background:#ffffff16;border-color:#b9b0ff}.memorycard.matched{border-color:#7ef0c1;color:#7ef0c1}.sequence{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.seqitem{min-width:42px;padding:12px 10px;border-radius:11px;background:#ffffff13;border:1px solid #ffffff25;text-align:center;font-size:22px;font-weight:850}.answerrow{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:15px}.answerrow input{width:min(330px,100%);border-radius:11px;border:1px solid #ffffff35;background:#ffffff0d;color:#fff;padding:12px;outline-color:#b5a8ff}.choice{padding:12px 16px;border-radius:12px;border:1px solid #ffffff2a;background:#ffffff0e;color:#fff}.choice:hover{border-color:#b7adff;background:#ffffff18}.result{text-align:center;padding:15px}.result .bigscore{font-size:55px;font-weight:950;letter-spacing:-.05em;margin:6px 0}.result .badge{font-size:40px}.result h3{font-size:23px;margin:6px 0}.result p{color:var(--muted);font-size:13px}
+@media(max-width:780px){.shell{padding:13px 13px 28px}.top{margin-bottom:23px}.hero{align-items:flex-start;flex-direction:column}.levelbox{width:100%;display:flex;justify-content:space-between;align-items:center}.levelbox strong{font-size:20px}.levelbox .progress{width:45%;margin:0}.games{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.game{min-height:170px;padding:15px}.world{padding:17px;border-radius:23px}.world h2{font-size:19px}.worldicon{width:50px;height:50px;font-size:26px}.bottomrow{grid-template-columns:1fr}.topright .pill:first-child{display:none}}
+@media(max-width:420px){.brand{font-size:12px}.logo{width:38px;height:38px}.topright .pill{padding:8px}.games{gap:8px}.game{padding:13px;min-height:166px}.gameico{font-size:27px;margin-bottom:13px}.game h3{font-size:14px}.game p{font-size:11px}.gamefoot{font-size:10px}.worldtop{align-items:flex-start}.worldmeta{margin-top:13px}.modal{padding:15px}.gamearea{padding:12px}.grid3{gap:6px}.tile{border-radius:10px}.cards{gap:6px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.campaign{margin-top:26px;border:1px solid var(--line);border-radius:25px;padding:18px;background:#ffffff0b;backdrop-filter:blur(15px)}
+.campaignhead{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:15px}
+.campaignhead p{font-size:12px;color:var(--muted);margin:5px 0 0}
+.pathboard{position:relative;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px;padding:8px 2px;isolation:isolate;max-height:430px;overflow:auto}
+.pathcell{aspect-ratio:1;border:1.5px solid #ffffff75;border-radius:50%;background:#ffffff0b;color:#fff;display:grid;place-items:center;font-size:clamp(10px,2.3vw,17px);font-weight:800;position:relative;min-width:0;transition:transform .18s,background .18s,border-color .18s;z-index:2}
+.pathcell.current{background:linear-gradient(145deg,#d4ccff,#83e9dd);color:#171936;border:2px solid white;box-shadow:0 0 0 4px #aaa0ff33,0 0 24px #a99aff88;transform:scale(1.07);animation:currentPulse 1.5s infinite}
+.pathcell.done{background:#7ef0c12b;border-color:#7ef0c1;color:#8af3cc}
+.pathcell.locked{opacity:.42;filter:saturate(.4)}
+.pathcell:not(.locked){cursor:pointer}
+.pathcell:not(.locked):hover{transform:scale(1.08)}
+@keyframes currentPulse{50%{box-shadow:0 0 0 7px #aaa0ff12,0 0 27px #a99affaa}}
+.pathcell.blank{visibility:hidden;pointer-events:none}
+.trophycenter{grid-column:4/7;grid-row:4/7;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;line-height:1.15}
+.trophycenter .cup{font-size:clamp(35px,8vw,65px);filter:drop-shadow(0 5px 8px #f4c84b44)}
+.trophycenter strong{font-size:clamp(11px,2.8vw,18px);color:#ffdf84}
+.trophycenter span{font-size:10px;color:var(--muted);margin-top:4px}
+.pathlegend{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;color:var(--muted);font-size:11px}
+.pathlegend span{display:flex;align-items:center;gap:5px}.legenddot{width:10px;height:10px;border-radius:50%;border:1px solid #ffffff75}
+.campaignactions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:13px}
+@media(max-width:520px){.campaign{padding:12px}.pathboard{gap:4px;padding:6px 0}.pathcell{border-width:1px}.campaignhead{align-items:flex-start;flex-direction:column}.campaignactions .btn{width:100%}}
+
+.avatar-panel{margin:18px 0;border:1px solid var(--line);border-radius:22px;padding:16px;background:#ffffff0a;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.avatar-face{width:66px;height:66px;border-radius:20px;display:grid;place-items:center;font-size:38px;background:linear-gradient(135deg,#d6ccff33,#7ce9de22);border:1px solid #ffffff33}
+.avatar-info{flex:1;min-width:140px}.avatar-info h3{margin:0 0 5px}.avatar-info p{margin:0;color:var(--muted);font-size:12px}
+.avatar-form{display:grid;gap:12px}.avatar-form label{display:grid;gap:6px;color:var(--muted);font-size:12px}.avatar-form input,.avatar-form select{width:100%;padding:12px 13px;border:1px solid #ffffff30;border-radius:12px;background:#171d3d;color:#fff;font:inherit}
+.avatar-choices{display:flex;gap:8px;flex-wrap:wrap}.avatar-choice{font-size:25px;border:1px solid #ffffff30;border-radius:12px;padding:8px;background:#ffffff08;cursor:pointer}.avatar-choice.selected{border-color:#c9c0ff;background:#bdb0ff2b;box-shadow:0 0 0 2px #bdb0ff22}
+
+.stage-card{border:1px solid #ffffff26;background:linear-gradient(135deg,#bdb0ff14,#7ce9de0a);border-radius:14px;padding:12px;margin:10px 0}
+.stage-card strong{display:block;margin-bottom:4px}.stage-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+.stage-chip{display:inline-flex;padding:5px 9px;border-radius:999px;background:#c9c0ff20;border:1px solid #c9c0ff55;font-size:11px;color:#ded8ff;margin:3px 4px 0 0}
+
+.age-gate{display:grid;gap:12px}.age-gate label{display:grid;gap:6px;font-size:12px;color:var(--muted)}.age-gate select{width:100%;padding:12px;border-radius:12px;background:#171d3d;color:white;border:1px solid #ffffff35;font:inherit}.age-badge{display:inline-flex;border:1px solid #c9c0ff66;background:#c9c0ff18;border-radius:999px;padding:4px 9px;font-size:11px;color:#e0d9ff}
+.vip-hero{border:1px solid #f6d78355;background:radial-gradient(ellipse at 10% 0%,#e8c45a20,transparent 55%),linear-gradient(135deg,#ffffff12,#ffffff06);border-radius:18px;padding:17px;margin:8px 0 15px}
+.vip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.vip-gift{border:1px solid #ffffff20;background:#ffffff0b;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:7px;min-height:155px}
+.vip-gift .gifticon{font-size:32px}.vip-gift strong{font-size:14px}.vip-gift p{margin:0;color:var(--muted);font-size:12px;line-height:1.4}.vip-gift .tag{margin-top:auto;align-self:flex-start}
+.vip-status{display:inline-flex;padding:5px 9px;border-radius:999px;background:#f6d78320;border:1px solid #f6d78366;color:#ffe8a6;font-size:11px}
+@media(max-width:560px){.vip-grid{grid-template-columns:1fr 1fr}.vip-gift{padding:11px;min-height:170px}.topright{gap:6px}.topright .pill{font-size:10px;padding:7px 8px}}
+
+
+.vip-crown{position:absolute;transform:translate(20px,-12px);font-size:22px;filter:drop-shadow(0 0 8px #ffd65e)}
+.vip-fox{position:absolute;transform:translate(35px,28px);font-size:24px;filter:drop-shadow(0 0 7px #ffb15e)}
+.avatar-face{position:relative}
+.vip-equip{margin-top:5px;width:100%;padding:8px 9px;border-radius:10px;background:#f6d78320;color:#ffe8a6;border:1px solid #f6d78366;font-size:12px}
+.vip-equip.equipped{background:#7ef0c122;border-color:#7ef0c188;color:#a8ffdc}
+
+.secret-panel{margin:18px 0;border:1px solid #a78bfa88;border-radius:22px;padding:18px;background:linear-gradient(135deg,#24194fdd,#102e49dd);box-shadow:0 0 30px #8b5cf622}
+.secret-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.secret-card{border:1px solid #ffffff24;background:#ffffff0c;border-radius:15px;padding:12px;text-align:center}
+.secret-card .pet{font-size:32px}.secret-card button{margin-top:8px;width:100%}
+.reward-banner{border:1px solid #f6d78388;background:linear-gradient(135deg,#49351a88,#3b236288);padding:15px;border-radius:16px;margin:12px 0}
+
+/* Checkpoint lobbies and prototype chat */
+.lobby-panel{margin:22px 0;padding:22px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(135deg,#ffffff12,#ffffff06);backdrop-filter:blur(16px)}
+.lobby-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.lobby-rooms{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:9px;margin:14px 0}
+.lobby-room{border:1px solid var(--line);border-radius:14px;padding:12px 10px;color:var(--ink);background:#ffffff0b;text-align:center}
+.lobby-room.active{border-color:var(--accent);background:#8b72ff2b;box-shadow:0 0 0 1px #8b72ff22}
+.lobby-room:disabled{opacity:.42;cursor:not-allowed}
+.lobby-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:14px}
+.lobby-card{border:1px solid var(--line);border-radius:18px;padding:15px;background:#080d25a6;min-width:0}
+.lobby-form{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.lobby-input{min-width:0;flex:1;background:#ffffff0c;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:11px 12px;font:inherit}
+.lobby-input::placeholder{color:#aeb5d7}
+.chat-log{height:220px;overflow:auto;display:flex;flex-direction:column;gap:9px;padding:8px 2px}
+.chat-msg{padding:9px 11px;border-radius:12px;background:#ffffff0b;overflow-wrap:anywhere}
+.chat-msg b{color:#d6ceff;font-size:12px;display:block;margin-bottom:3px}
+.chat-msg p{margin:0;font-size:13px;line-height:1.45}
+.lobby-note{font-size:12px;color:var(--muted);line-height:1.5}
+@media(max-width:680px){.lobby-layout{grid-template-columns:1fr}.lobby-panel{padding:16px}.chat-log{height:190px}}
+
+
+/* Voice input controls */
+.voice-chat-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.voice-btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:#8b72ff22;color:var(--ink);font:inherit;cursor:pointer}
+.voice-btn[disabled]{opacity:.55;cursor:not-allowed}
+.voice-btn.recording{border-color:#fb7185;background:#fb718522;animation:voicePulse 1.2s ease-in-out infinite}
+.voice-status{font-size:12px;color:var(--muted);min-height:18px;margin:5px 0 0}
+@keyframes voicePulse{50%{box-shadow:0 0 0 4px #fb718522}}
+@media(prefers-reduced-motion:reduce){.voice-btn.recording{animation:none}}
+
+
+/* Live voice room MVP */
+.live-voice-card{margin-top:14px;border:1px solid rgba(126,240,193,.35)}
+.live-voice-head,.live-voice-members{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.live-voice-controls{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
+.live-voice-controls .lobby-input{width:100%;box-sizing:border-box}
+.live-voice-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px}
+.live-voice-buttons .btn{min-height:42px}
+.btn.secondary{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)}
+.live-voice-participants{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:7px}
+.live-voice-participants li{padding:9px 11px;border-radius:12px;background:rgba(255,255,255,.045);display:flex;align-items:center;gap:8px}
+.live-voice-participants .speaking-dot{width:8px;height:8px;border-radius:50%;background:#7ef0c1;display:inline-block}
+.live-voice-participants .self-label{margin-left:auto;font-size:11px;opacity:.7}
+@media(min-width:720px){.live-voice-controls{grid-template-columns:1fr 1fr;align-items:center}.live-voice-buttons{grid-column:1/-1}}
+
+</style>
+</head>
+<body>
+<div id="scene"><canvas id="stars"></canvas></div>
+<div class="shell">
+<header class="top">
+ <div class="brand"><div class="logo">M</div><div>MEMORA LAB<div style="font-size:10px;color:#b9c1e3;letter-spacing:.08em;font-weight:650">YOUR MIND. YOUR WORLD.</div></div></div>
+ <div class="topright"><button class="pill" id="openVip" style="cursor:pointer;border-color:#f6d78388;background:linear-gradient(135deg,#e6c76b26,#a47aee22);color:#ffe8a6">👑 VIP sovg‘alar</button><div class="pill" id="todayPill">✦ Bugungi sarguzasht</div><div class="pill">🔥 <b id="streakTop">0</b> kun</div></div>
+</header>
+
+<section class="avatar-panel">
+ <div class="avatar-face" id="avatarFace">🧑‍🚀</div>
+ <div class="avatar-info"><div class="eyebrow">SENING QAHрамONING</div><h3 id="avatarName">Avatar yarat</h3><p id="avatarAge">Boshlang‘ich yoshingni tanla. Har yangi bosqichda avatar ulg‘ayadi.</p><span class="age-badge" id="ageBadge">Yoshni belgilang</span></div>
+ <button class="btn secondary" id="editAvatar">Avatar yarat ✨</button>
+</section>
+<section class="hero">
+ <div><div class="eyebrow">Xotira laboratoriyasiga xush kelibsan</div><h1>Har kuni yangi dunyo.<br><span style="background:linear-gradient(90deg,#c6baff,#7ce9de);background-clip:text;color:transparent">Har kuni yangi sinov.</span></h1><p>Yodingni sinab ko‘r, strategiyalarni o‘rgan va o‘z natijangni yaxshila. Har bir o‘yin — miyang uchun yangi sarguzasht.</p></div>
+ <div class="levelbox"><div><span class="muted" style="font-size:11px">SENING DARAJANG</span><strong id="levelName">Boshlovchi</strong></div><div class="progress"><span id="levelProgress"></span></div></div>
+</section>
+<section class="world">
+ <div class="worldtop"><div class="worldname"><div class="worldicon" id="worldIcon">🏛️</div><div><div class="eyebrow" style="margin-bottom:5px" id="worldDay">1-KUN · XOTIRA SAYOHATI</div><h2 id="worldName">Qadimiy xotira shahri</h2><p class="worlddesc" id="worldDesc">Belgilarni top, joylarni eslab qol va o‘z yo‘lingni yarat.</p></div></div><button class="btn" id="startDaily">Sarguzashtni boshlash ↗</button></div>
+ <div class="worldmeta"><span class="tag" id="worldTechnique">🧠 Fazoviy xotira</span><span class="tag">⏱ 5–8 daqiqa</span><span class="tag" id="worldProgressTag">0/3 sinov bajarildi</span></div>
+</section>
+
+<section class="campaign">
+ <div class="campaignhead"><div><div class="eyebrow" style="margin-bottom:6px">BOSQICHMA-BOSQICH</div><h2>🏁 Xotira yo‘li</h2><p>Sinovni yut → keyingi katak ochiladi. 200-levelgacha yetib, mukofot sinovini yakunla!</p></div><span class="tag" id="campaignProgress">0/200 level</span></div>
+ <div class="pathboard" id="pathBoard" aria-label="200 level sarguzasht yo‘li"></div>
+ <div class="pathlegend"><span><i class="legenddot" style="background:#7ef0c1"></i> Yutilgan</span><span><i class="legenddot" style="background:#c9c0ff"></i> Hozirgi bosqich</span><span><i class="legenddot"></i> Qulflangan</span></div>
+ <div class="campaignactions"><button class="btn" id="continueCampaign">Hozirgi bosqichni boshlash ↗</button><span class="muted" id="campaignHint" style="font-size:12px">Birinchi bosqich tayyor.</span></div>
+</section>
+
+
+<section class="lobby-panel" id="lobbyPanel">
+ <div class="lobby-head">
+  <div><div class="eyebrow" style="margin-bottom:6px">JAMOA UCHRASHUVLARI</div><h2>🪐 Har 5 darajada — do‘stlar maydoni</h2>
+   <p class="muted" style="margin:8px 0 0">5, 10, 15, 20... darajalarda o‘yinchilar yig‘iladigan xona. Xona tanla, taxallus yoz va chatda suhbatlash.</p>
+  </div>
+  <span class="tag" id="lobbyRoomTag">5-daraja xonasi</span>
+ </div>
+ <div class="lobby-rooms" id="lobbyRooms" aria-label="Daraja xonalari"></div>
+ <div class="lobby-layout">
+  <div class="lobby-card">
+   <h3 style="margin:0 0 8px">👤 Ishtirokchi</h3>
+   <label class="lobby-note" for="lobbyNickname">Chatdagi taxallusing</label>
+   <div class="lobby-form"><input class="lobby-input" id="lobbyNickname" maxlength="20" placeholder="Masalan, XotiraYulduzi"><button class="btn" id="saveLobbyNickname">Saqlash</button></div>
+   <p class="lobby-note" id="lobbyStatus">Demo xona tanlangan. Xabarlar shu qurilmada saqlanadi.</p>
+   <p class="lobby-note">🔒 Shaxsiy ma’lumot, telefon raqam yoki manzilni chatga yozma. Nomaqbul xabarlarni moderatsiya qilish serverli versiyada qo‘shiladi.</p>
+  </div>
+  <div class="lobby-card">
+   <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><h3 style="margin:0">💬 Xona chati</h3><span class="tag" id="chatCount">0 xabar</span></div>
+   <div class="chat-log" id="lobbyChatLog" aria-live="polite"><p class="lobby-note">Hozircha xabar yo‘q. Birinchi bo‘lib salom ber!</p></div>
+   <form class="lobby-form" id="lobbyChatForm"><input class="lobby-input" id="lobbyChatInput" maxlength="240" placeholder="Xabar yoz yoki mikrofonni bos..." autocomplete="off" required><button class="btn" type="submit">Yuborish ↗</button></form>
+   <div class="voice-chat-controls"><button type="button" class="voice-btn" id="voiceInputBtn" aria-pressed="false">🎙️ Ovoz bilan yozish</button></div>
+   <p class="voice-status" id="voiceInputStatus" aria-live="polite">Ovoz bilan yozish uchun mikrofon ruxsati kerak bo‘lishi mumkin.</p>
+   <p class="lobby-note">Prototip eslatmasi: hozircha chat faqat shu brauzerda ishlaydi. Turli o‘yinchilar internet orqali bir-biri bilan jonli yozishishi uchun server, foydalanuvchi hisoblari va xavfsiz moderatsiya kerak.</p>
+  </div>
+ </div>
+ <div class="lobby-card live-voice-card" id="liveVoiceCard">
+  <div class="live-voice-head"><div><h3 style="margin:0 0 5px">🎧 Jonli ovozli xona</h3><p class="lobby-note" style="margin:0">Internet orqali boshqa qurilmalardagi o‘yinchilar bilan gaplash.</p></div><span class="tag">Maks. 5 kishi</span></div>
+  <div class="live-voice-controls">
+   <label class="lobby-note" for="liveVoiceRoom">Xona darajasi</label>
+   <select class="lobby-input" id="liveVoiceRoom"></select>
+   <label class="lobby-note" for="liveVoiceNickname">Ovozli xonadagi taxallus</label>
+   <input class="lobby-input" id="liveVoiceNickname" maxlength="20" placeholder="Taxallus (haqiqiy ism shart emas)" autocomplete="nickname">
+   <div class="live-voice-buttons"><button class="btn" id="liveVoiceJoin" type="button">🎙️ Xonaga kirish</button><button class="btn secondary" id="liveVoiceMute" type="button" disabled>🔇 Mikrofonni o‘chirish</button><button class="btn secondary" id="liveVoiceLeave" type="button" disabled>Chiqish</button></div>
+  </div>
+  <p class="lobby-note" id="liveVoiceStatus" role="status" aria-live="polite">Tayyorlanmoqda. Jonli chat ishlashi uchun server sozlamalari va LiveKit kalitlari kerak.</p>
+  <div class="live-voice-members"><strong>Ishtirokchilar</strong><span class="tag" id="liveVoiceCount">0/5</span></div>
+  <ul id="liveVoiceParticipants" class="live-voice-participants"><li class="lobby-note">Hozircha ulanmagan.</li></ul>
+  <p class="lobby-note">🔐 Mikrofon faqat xonaga kirganingda yoqiladi. O‘zing haqingdagi shaxsiy ma’lumotlarni aytma. Noqulay vaziyat bo‘lsa, darhol xonadan chiq.</p>
+  <p class="lobby-note"><strong>Holat:</strong> bu integratsiya kodi tayyorlanmoqda; u hali bulutli hisobga ulanmagan yoki internetda joylashtirilmagan.</p>
+ </div>
+</section>
+
+<section class="secret-panel">
+ <div class="campaignhead"><div><h2>🔑 Sirli olam</h2><p>Kalit yig‘, sirli hayvon sheriklarni och va jamoangni tuz.</p></div><span class="tag" id="keyCount">🔑 0 kalit</span></div>
+ <div id="secretWorldContent"><p class="muted">Har 10 ta levelni tugatganda sirli kalit olasan. Kalitlar sirli olamdagi hayvon sheriklarni ochadi.</p></div>
+ <div class="campaignactions"><button class="btn" id="openSecretWorld">Sirli olamni ochish 🔑</button><span class="muted" style="font-size:12px">Bu prototipdagi o‘yin ichki kalitlari haqiqiy pul emas.</span></div>
+</section>
+
+<div class="sectionhead"><div><h2>Bugungi sinovlar</h2><p>O‘zing xohlagan mashqni tanla</p></div><p id="gamesCount">6 ta o‘yin</p></div>
+<section class="games" id="games"></section>
+<section class="bottomrow">
+ <div class="mini-panel"><h3>📅 Sarguzasht taqvimi</h3><div class="dailylist" id="calendar"></div><p class="daily-note" id="calendarNote">Bugungi sinovni bajarsang, kun belgilanadi.</p></div>
+ <div class="mini-panel"><h3>🏆 Sening yutuqlaring</h3><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><div><div class="streak">✨ <span id="totalScore">0</span> XP</div><div class="daily-note">Jami to‘plangan tajriba</div></div><div style="text-align:right"><div class="streak">🎯 <span id="playedCount">0</span></div><div class="daily-note">Bajarilgan o‘yin</div></div></div><p class="daily-note">Natijalar ushbu qurilmada saqlanadi. Bu tibbiy yoki klinik test emas.</p></div>
+</section>
+<p class="tiny">MEMORA LAB · Xotirani mashq qilish — izchil tajriba va takrorlashdan boshlanadi.</p>
+</div>
+<div id="overlay" class="overlay" style="display:none"><div class="modal" id="modal"></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const WORLDS=[
+ {icon:"🏛️",name:"Qadimiy xotira shahri",desc:"Qadimiy ko‘chalarda belgilarni eslab qol va xotira saroyini kashf et.",tech:"Fazoviy xotira · Memory palace",theme:0},
+ {icon:"🌌",name:"Kosmik signal stansiyasi",desc:"Yulduzlar orasidagi signallarni tut, ketma-ketliklarni eslab qol.",tech:"Ketma-ketlik va ishchi xotira",theme:1},
+ {icon:"🌿",name:"Sirli o‘rmon",desc:"O‘rmondagi belgilar va jonivorlarni kuzatib, keraklisini yodingda saqla.",tech:"Vizual xotira va assotsiatsiya",theme:2},
+ {icon:"🌊",name:"Suv osti olami",desc:"Marvaridlar, ranglar va shakllar orasidan xotira izlarini top.",tech:"Obrazli xotira",theme:3},
+ {icon:"🏯",name:"Sharqiy jumboqlar saroyi",desc:"Ramzlarni guruhla, so‘zlarni bog‘la va xotira usullarini sinab ko‘r.",tech:"Chunking va assotsiatsiya",theme:4},
+ {icon:"🚀",name:"Kelajak laboratoriyasi",desc:"Tezkor sinovlar orqali o‘z strategiyangni tanla.",tech:"Aralash xotira strategiyalari",theme:5},
+ {icon:"🧊",name:"Muz kristallari vodiysi",desc:"Kristallarning joylashuvini kuzat va to‘g‘ri tartibni tikla.",tech:"Fazoviy va vizual xotira",theme:6}
+];
+const GAMEDEFS=[
+ {id:"grid",icon:"🔮",title:"Kristall panjara",desc:"Yoritilgan kataklarni eslab, qayta tanla.",time:"2–3 daq.",glow:"#8274ff",type:"spatial"},
+ {id:"pairs",icon:"🪄",title:"Sehrli juftliklar",desc:"Yopiq kartalar orasidan bir xil belgilarni top.",time:"2–4 daq.",glow:"#e17bd8",type:"visual"},
+ {id:"sequence",icon:"🛰️",title:"Signal ketma-ketligi",desc:"Raqamlar zanjirini yodlab, tartibda yoz.",time:"1–2 daq.",glow:"#5ec8ff",type:"sequence"},
+ {id:"words",icon:"🧠",title:"So‘zlar sandig‘i",desc:"So‘zlarni eslab qol va qancha yodingda qolganini tekshir.",time:"2 daq.",glow:"#7ce9c7",type:"words"},
+ {id:"singleword",icon:"✍️",title:"Bitta so‘zni eslab yoz",desc:"Bitta so‘zni yodlab ol. U yashirilgach, esingda qolganini yoz.",time:"1 daq.",glow:"#ffd166",type:"recall"},
+ {id:"path",icon:"🧭",title:"Yo‘lni eslab qol",desc:"Yo‘nalish belgilarini ko‘r va yo‘lni qayta tuz.",time:"2 daq.",glow:"#ffc477",type:"path"},
+ {id:"focus",icon:"⚡",title:"Diqqat chaqnashi",desc:"Ko‘rsatma bo‘yicha mos belgilarni tez ajrat.",time:"1–2 daq.",glow:"#ff91a8",type:"focus"},
+ {id:"story",icon:"📚",title:"Hikoya ilgagi",desc:"Qisqa voqeani eslab, keyin savollarga javob ber.",time:"2 daq.",glow:"#a4c6ff",type:"story"},
+ {id:"color",icon:"🎨",title:"Rang kodi",desc:"Rang va raqamlarni bog‘lab, kodni tikla.",time:"1–2 daq.",glow:"#e3a7ff",type:"color"},
+ {id:"faces",icon:"🦊",title:"Qahramonlar albomi",desc:"Qahramon va buyumlarni eslab, juftligini top.",time:"2 daq.",glow:"#ffbd92",type:"pairs2"}
+];
+const WORDS=["olma","ko‘prik","bulut","kalit","daryo","oyna","kitob","qush","soat","daraxt","yulduz","chiroq","qalam","dengiz","gul","eshik","tog‘","baliq","qayiq","sham"];
+const EMOJIS=["🍉","🦊","🌙","🎈","🐳","🍀","🪐","🍄","🧸","🦋","🍋","🎸","🧁","🐙","🌻","🚲"];
+const todayKey=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
+function load(){try{return JSON.parse(localStorage.getItem("memoraV2")||"{}")}catch(e){return {}}}
+let data=load();data.days=data.days||{};data.history=data.history||{};data.totalScore=data.totalScore||0;data.playedCount=data.playedCount||0;data.streak=data.streak||0;data.avatar=data.avatar||null;data.avatarAge=data.avatarAge||null;data.userAge=Number(data.userAge)||null;data.secretKeys=Number(data.secretKeys)||0;data.secretPets=data.secretPets||[];
+let currentGame=null, cleanupTimer=null;
+function save(){localStorage.setItem("memoraV2",JSON.stringify(data));renderStats()}
+
+const AVATARS=["🧑‍🚀","🧙","🦊","🐼","🦁","🐯","🧝","🤖","🐉","🦄"];
+let selectedAvatar="🧑‍🚀";
+
+function ageBand(age){
+ if(age<=11)return {label:"Bolalar",focus:"Qisqa, rangli va o‘yinli topshiriqlar",rounds:3,sequence:3,words:3};
+ if(age<=17)return {label:"O‘smirlar",focus:"Tezlik, diqqat va murakkabroq ketma-ketliklar",rounds:4,sequence:4,words:4};
+ if(age<=35)return {label:"Yoshlar",focus:"Turli xotira turlari va moslashuvchan murakkablik",rounds:5,sequence:5,words:5};
+ if(age<=59)return {label:"Kattalar",focus:"Mazmuniy eslab qolish, strategiyalar va diqqat",rounds:4,sequence:5,words:5};
+ return {label:"Katta yoshdagilar",focus:"Shoshirmaydigan, bosqichma-bosqich xotira mashqlari",rounds:3,sequence:4,words:4};
+}
+function openAgeSetup(){
+ modal("Yoshing nechada?","Yoshga mos boshlang‘ich darajani tanlaymiz. Yosh guruhlari faqat mashqni moslashtirish uchun ishlatiladi.",`<div class="age-gate"><label>Yoshni tanla<select id="userAgeSelect">${Array.from({length:88},(_,i)=>13+i).map(n=>`<option value="${n}" ${Number(data.userAge||18)===n?"selected":""}>${n} yosh</option>`).join("")}</select></label><div class="stage-card"><strong>Yoshga mos mashqlar</strong><p id="agePreview">Tanlovga qarab topshiriqlar soni va boshlang‘ich qiyinlik moslashtiriladi.</p></div><p class="daily-note">Bu mashqlar tibbiy tashxis yoki xotira qobiliyati haqida qat’iy xulosa bermaydi.</p></div>`,`<div class="gamebuttons"><button class="btn" id="saveUserAge">Davom etish →</button></div>`);
+ const sel=$("userAgeSelect"), preview=$("agePreview");
+ const update=()=>{const b=ageBand(+sel.value);preview.textContent=`${b.label}: ${b.focus}. Boshlang‘ich daraja: ${b.rounds} bosqichli mashqlar.`};
+ sel.onchange=update;update();
+ $("saveUserAge").onclick=()=>{data.userAge=+sel.value;save();closeGame();renderAgeBadge();};
+}
+function renderAgeBadge(){
+ let el=$("ageBadge");if(!el)return;
+ el.textContent=data.userAge?`${data.userAge} yosh · ${ageBand(data.userAge).label}`:"Yoshni belgilang";
+}
+
+function applyVipLook(){
+ const active=!!data.vipDemo, gift=active?(data.vipGift||""):"";
+ const face=$("avatarFace"), scene=$("scene");
+ if(face){
+  face.querySelectorAll(".vip-crown,.vip-fox").forEach(n=>n.remove());
+  if(gift==="crown"){const c=document.createElement("span");c.className="vip-crown";c.textContent="👑";face.appendChild(c)}
+  if(gift==="fox"){const f=document.createElement("span");f.className="vip-fox";f.textContent="🦊";face.appendChild(f)}
+  face.style.boxShadow=gift==="trail"?"0 0 22px #f6d783,0 0 40px #a47aee":"";
+  face.style.borderColor=gift==="crown"?"#f6d783":"";
+ }
+ if(scene){
+  if(gift==="cosmic") scene.style.background="radial-gradient(ellipse at 15% 20%,#8b42cf 0,transparent 42%),radial-gradient(ellipse at 85% 70%,#1567a3 0,transparent 45%),linear-gradient(135deg,#160d36,#2b1558 55%,#071d3e)";
+  else scene.style.background="";
+ }
+}
+function renderAvatar(){
+ const a=data.avatar;
+ $("avatarFace").textContent=a?.icon||"🧑‍🚀";
+ $("avatarName").textContent=a?.name||"Avatar yarat";
+ const age=a?(Number(a.startAge||18)+Number(data.avatarAge||0)):null;
+ $("avatarAge").textContent=a?`Yoshi: ${age} · ${Number(data.avatarAge||0)} marta ulg‘aydi`:"Boshlang‘ich yoshingni tanla. Har yangi bosqichda avatar ulg‘ayadi.";
+ $("editAvatar").textContent=a?"Avatarni o‘zgartirish ✨":"Avatar yarat ✨";
+
+ applyVipLook();
+}
+function openAvatarSetup(){
+ selectedAvatar=data.avatar?.icon||"🧑‍🚀";
+ const current=data.avatar||{name:"",startAge:18};
+ modal("O‘z avataringni yarat","Ism, boshlang‘ich yosh va qahramon tanla. Yangi bosqichlarni ochganing sari avataring ulg‘ayadi.",`<div class="avatar-form"><label>Avatar ismi<input id="avatarInputName" maxlength="20" placeholder="Masalan: Ziyo" value="${String(current.name||"").replace(/"/g,"&quot;")}"></label><label>Boshlang‘ich yosh<select id="avatarInputAge">${Array.from({length:83},(_,i)=>13+i).map(n=>`<option value="${n}" ${Number(current.startAge||18)===n?"selected":""}>${n} yosh</option>`).join("")}</select></label><div><label>Qahramoningni tanla</label><div class="avatar-choices">${AVATARS.map(icon=>`<button class="avatar-choice ${selectedAvatar===icon?"selected":""}" data-avatar-choice="${icon}">${icon}</button>`).join("")}</div></div><p class="daily-note">Yosh — o‘yin ichidagi qahramonning xususiyati; haqiqiy yoshingni ko‘rsatish shart emas.</p></div>`,`<div class="gamebuttons"><button class="btn" id="saveAvatar">Avatarni saqlash ✓</button></div>`);
+ document.querySelectorAll("[data-avatar-choice]").forEach(b=>b.onclick=()=>{selectedAvatar=b.dataset.avatarChoice;document.querySelectorAll("[data-avatar-choice]").forEach(x=>x.classList.toggle("selected",x===b))});
+ $("saveAvatar").onclick=()=>{const name=$("avatarInputName").value.trim()||"Xotira qahramoni";const age=Number($("avatarInputAge").value)||18;const old=data.avatar;data.avatar={name,icon:selectedAvatar,startAge:age};if(!data.userAge)data.userAge=age;if(!old)data.avatarAge=0;save();renderAvatar();closeGame();};
+}
+$("editAvatar").addEventListener("click",openAvatarSetup);
+
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function todayIndex(){const start=new Date(2026,0,1);const now=new Date();const days=Math.floor((new Date(now.getFullYear(),now.getMonth(),now.getDate())-start)/86400000);return ((days%WORLDS.length)+WORLDS.length)%WORLDS.length}
+function world(){return WORLDS[todayIndex()]}
+function initWorld(){const w=world();$("worldIcon").textContent=w.icon;$("worldName").textContent=w.name;$("worldDesc").textContent=w.desc;$("worldTechnique").textContent="🧠 "+w.tech;$("worldDay").textContent=`${todayIndex()+1}-KUN · BUGUNGI DUNYO`;$("scene").style.background=`radial-gradient(ellipse at 15% 20%,${["#483c9a","#263f9e","#205b4b","#126a83","#68442f","#44326e","#4b6a8a"][w.theme]} 0,transparent 44%),radial-gradient(ellipse at 85% 70%,${["#126a83","#713c9a","#a06a38","#216b9b","#a23d71","#1b8b91","#b0d9ed"][w.theme]} 0,transparent 45%),linear-gradient(135deg,#10152c,#171d46 55%,#0b2d46)`;renderGames()}
+function renderGames(){const list=GAMEDEFS.map(g=>`<button class="game" data-game="${g.id}" style="--glow:${g.glow}"><span class="gameico">${g.icon}</span><h3>${g.title}</h3><p>${g.desc}</p><div class="gamefoot"><span>${g.time}</span><span class="playarr">↗</span></div></button>`).join("");$("games").innerHTML=list;$("gamesCount").textContent=GAMEDEFS.length+" ta o‘yin";document.querySelectorAll("[data-game]").forEach(b=>b.addEventListener("click",()=>startGame(b.dataset.game)));$("startDaily").onclick=()=>startGame(["grid","pairs","sequence"][todayIndex()%3])}
+
+function openVipShop(){
+ const active=!!data.vipDemo;
+ const gifts=[
+  {id:"fox",icon:"🦊",name:"Kristall tulki",desc:"Avatar yonida paydo bo‘ladigan noyob hamroh.",kind:"VIP sovg‘a"},
+  {id:"crown",icon:"👑",name:"Yulduzli toj",desc:"Profil avataringga taqiladigan toj.",kind:"VIP sovg‘a"},
+  {id:"cosmic",icon:"🌌",name:"Kosmik fon",desc:"Laboratoriya fonini kosmik ranglarga o‘zgartiradi.",kind:"VIP bezak"},
+  {id:"trail",icon:"✨",name:"Yorqin iz",desc:"Avatar atrofida oltin yaltirash paydo bo‘ladi.",kind:"VIP effekt"}
+ ];
+ modal("👑 MEMORA LAB VIP","Oylik a’zolik sovg‘alarini tanla va avataringda ishlat.",`
+  <div class="vip-hero">
+   <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><strong style="font-size:19px">VIP a’zolik</strong><span class="vip-status">${active?"Demo VIP faol":"VIP hozircha faol emas"}</span></div>
+   <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:9px 0">VIP sovg‘alarini tanlab avataringga qo‘llash mumkin. Asosiy xotira mashqlari bepul qoladi.</p>
+   <div style="display:flex;align-items:baseline;gap:7px"><strong style="font-size:25px">20 000 so‘m</strong><span style="color:var(--muted);font-size:12px">/ oy</span></div>
+  </div>
+  <div class="vip-grid">${gifts.map(g=>`<div class="vip-gift"><div class="gifticon">${g.icon}</div><strong>${g.name}</strong><p>${g.desc}</p><span class="tag">${g.kind}</span><button class="vip-equip ${data.vipGift===g.id&&active?"equipped":""}" data-gift="${g.id}" ${active?"":"disabled"}>${!active?"VIP kerak":data.vipGift===g.id?"✓ Tanlangan":"Sovg‘ani taqish"}</button></div>`).join("")}</div>
+  <p class="daily-note">${active?"Demo rejim: sovg‘alar haqiqiy ishlaydi, lekin faqat shu brauzerda saqlanadi.":"Sovg‘alarni sinash uchun demo VIPni yoq. Bu haqiqiy to‘lov emas."}</p>
+  <div class="gamebuttons"><button class="btn" id="vipDemoToggle">${active?"Demo VIPni o‘chirish":"Demo VIPni to‘lovsiz sinash"}</button><button class="btn secondary" id="vipClose">Yopish</button></div>
+  <p class="daily-note">Haqiqiy to‘lov, oylik yangilanish va obunani bekor qilish hali ulanmagan.</p>`);
+ document.querySelectorAll("[data-gift]").forEach(btn=>btn.onclick=()=>{
+  if(!data.vipDemo)return;
+  data.vipGift=btn.dataset.gift;save();renderAvatar();openVipShop();toast("VIP sovg‘a avatarga qo‘llandi!");
+ });
+ $("vipDemoToggle").onclick=()=>{data.vipDemo=!data.vipDemo;if(!data.vipDemo)data.vipGift="";save();renderAvatar();closeGame();toast(data.vipDemo?"Demo VIP yoqildi — to‘lov olinmadi.":"Demo VIP o‘chirildi.");openVipShop()};
+ $("vipClose").onclick=closeGame;
+}
+
+function renderStats(){const today=data.days[todayKey()]||{};$("totalScore").textContent=data.totalScore;$("playedCount").textContent=data.playedCount;$("streakTop").textContent=data.streak;$("worldProgressTag").textContent=`${Object.keys(today).length}/3 sinov bajarildi`;$("calendar").innerHTML=Array.from({length:7},(_,i)=>{const dt=new Date();dt.setDate(dt.getDate()-(6-i));const k=`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,"0")}-${String(dt.getDate()).padStart(2,"0")}`;const done=!!data.days[k]&&Object.keys(data.days[k]).length>0;return `<div class="daydot ${done?"done":""}" title="${k}">${done?"✓":dt.getDate()}</div>`}).join("");const n=Object.keys(today).length;$("calendarNote").textContent=n>=3?"Ajoyib! Bugungi 3 ta sinovni ham bajarding.":`Bugun ${n}/3 sinov bajarildi. Yana ${Math.max(0,3-n)} ta sinov bilan kunni yakunla.`;const lv=Math.floor(data.totalScore/100)+1;$("levelName").textContent=lv<3?"Boshlovchi":lv<6?"Izlanuvchi":lv<10?"Xotira ustasi":"Xotira afsonasi";$("levelProgress").style.width=(data.totalScore%100)+"%"}
+function modal(title,desc,content,actions=""){clearInterval(cleanupTimer);$("modal").innerHTML=`<div class="modalhead"><div><div class="eyebrow">MEMORA LAB · SINOV</div><h2>${title}</h2></div><button class="close" id="closeGame">×</button></div><p class="instruction">${desc}</p>${content}${actions}`;$("overlay").style.display="grid";$("closeGame").onclick=closeGame}
+function closeGame(){clearInterval(cleanupTimer);$("overlay").style.display="none";currentGame=null}
+function startGame(id){if(!data.avatar){openAvatarSetup();return}currentGame=id;const map={grid:gameGrid,pairs:gamePairs,sequence:gameSequence,words:gameWords,singleword:gameSingleWord,path:gamePath,focus:gameFocus,story:gameStory,color:gameColor,faces:gameFaces};(map[id]||gameGrid)()}
+function result(score,detail){clearInterval(cleanupTimer);const xp=Math.max(5,Math.round(score));const k=todayKey();data.days[k]=data.days[k]||{};data.days[k][currentGame]=score;data.totalScore+=xp;data.playedCount++;data.history[k]=true;const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);const yk=`${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,"0")}-${String(yesterday.getDate()).padStart(2,"0")}`;data.streak=data.history[yk]?Math.max(1,data.streak+1):Math.max(1,data.streak);save();const name=GAMEDEFS.find(g=>g.id===currentGame)?.title||"Sinov";modal("Sinov yakunlandi",name,`<div class="result"><div class="badge">${score>=85?"🏆":score>=60?"✨":"💪"}</div><div class="bigscore">${score}%</div><h3>${score>=85?"Ajoyib natija!":score>=60?"Yaxshi urinish!":"Mashqni davom ettir!"}</h3><p>${detail}</p><p style="color:#bdb3ff;font-weight:800">+${xp} XP qo‘shildi</p></div>`,`<div class="gamebuttons"><button class="btn secondary" id="again">Yana o‘ynash ↻</button><button class="btn" id="backHome">Dunyoga qaytish →</button></div>`);$("again").onclick=()=>startGame(currentGame);$("backHome").onclick=closeGame;renderStats()}
+function gameGrid(){const stage=Number(data.currentStage)||1;const n=3+Math.min(3,Math.floor(data.playedCount/5))+(stage>=50?Math.min(4,Math.floor((stage-50)/35)):0);let targets=shuffle([...Array(9).keys()]).slice(0,Math.min(3+n%3,7));modal("Kristall panjara","Yoritilgan kataklarni yodlab ol. Keyin aynan o‘sha kataklarni bos.",`<div id="gameArea" class="gamearea"><div><div id="gridInfo" style="text-align:center;margin-bottom:12px;color:#d8d5ff">Kataklarni diqqat bilan kuzat…</div><div class="grid3" id="gridBoard">${Array.from({length:9},(_,i)=>`<button class="tile" data-tile="${i}" aria-label="Katak ${i+1}"></button>`).join("")}</div><div id="gridTimer" class="timerbar"><span></span></div></div></div>`,`<div class="gamebuttons"><button class="btn secondary" id="restartGrid">Qayta ko‘rsat</button></div>`);let chosen=new Set(),answered=false;const buttons=[...document.querySelectorAll("[data-tile]")];function reveal(){chosen.clear();answered=false;buttons.forEach(b=>{b.className="tile";b.textContent=""});targets.forEach(i=>{buttons[i].classList.add("target");buttons[i].textContent="✦"});$("gridInfo").textContent="Yodingda saqla!";let left=3+Math.floor(targets.length/2);$("gridTimer").style.display="block";$("gridTimer").firstElementChild.style.width="100%";clearInterval(cleanupTimer);cleanupTimer=setInterval(()=>{left-=.1;$("gridTimer").firstElementChild.style.width=Math.max(0,left/(3+Math.floor(targets.length/2))*100)+"%";if(left<=0){clearInterval(cleanupTimer);buttons.forEach(b=>{b.className="tile";b.textContent=""});$("gridInfo").textContent="Endi yodingdagi kataklarni tanla!";$("gridTimer").style.display="none";answered=true}},100)}buttons.forEach(b=>b.onclick=()=>{if(!answered||chosen.has(+b.dataset.tile))return;const i=+b.dataset.tile;chosen.add(i);if(targets.includes(i)){b.classList.add("chosen");b.textContent="✓"}else{b.classList.add("wrong");b.textContent="×"}if(chosen.size===targets.length){const correct=[...chosen].filter(i=>targets.includes(i)).length;setTimeout(()=>result(Math.round(correct/targets.length*100),`To‘g‘ri topilgan kataklar: ${correct}/${targets.length}.`),350)}});$("restartGrid").onclick=reveal;reveal()}
+function gamePairs(){const stage=Number(data.currentStage)||1;const pairCount=6+(stage>=50?Math.min(6,Math.floor((stage-50)/25)):0);const faces=shuffle(EMOJIS).slice(0,pairCount);const deck=shuffle([...faces,...faces]);let opened=[],matched=0,moves=0,locked=false;modal("Sehrli juftliklar","Bir xil belgili kartalarni top. Kamroq urinishda barcha juftliklarni ochishga harakat qil.",`<div class="gamearea"><div><div id="pairInfo" style="text-align:center;margin-bottom:12px">Juftliklar: 0/${pairCount} · Urinishlar: 0</div><div class="cards" id="cards">${deck.map((f,i)=>`<button class="memorycard" data-card="${i}" aria-label="Yopiq karta">?</button>`).join("")}</div></div></div>`);const btns=[...document.querySelectorAll("[data-card]")];btns.forEach((b,i)=>b.onclick=()=>{if(locked||b.classList.contains("matched")||b.classList.contains("open"))return;b.classList.add("open");b.textContent=deck[i];opened.push(i);if(opened.length===2){moves++;const [a,c]=opened;if(deck[a]===deck[c]){btns[a].classList.add("matched");btns[c].classList.add("matched");matched++;opened=[];$("pairInfo").textContent=`Juftliklar: ${matched}/${pairCount} · Urinishlar: ${moves}`;if(matched===pairCount)setTimeout(()=>result(Math.max(30,Math.round(100*pairCount/moves)),`${pairCount} ta juftlik ${moves} ta urinishda topildi.`),450)}else{locked=true;setTimeout(()=>{btns[a].classList.remove("open");btns[c].classList.remove("open");btns[a].textContent="?";btns[c].textContent="?";opened=[];locked=false;$("pairInfo").textContent=`Juftliklar: ${matched}/${pairCount} · Urinishlar: ${moves}`},650)}}})}
+function gameSequence(){const stage=Number(data.currentStage)||1;const len=5+Math.min(4,Math.floor(data.playedCount/4))+(stage>=50?Math.min(8,Math.floor((stage-50)/20)):0);const nums=Array.from({length:len},()=>Math.floor(Math.random()*9)+1);modal("Signal ketma-ketligi","Raqamlarni bir necha soniya yodlab ol. So‘ng aynan shu tartibda yoz.",`<div class="gamearea"><div style="width:100%"><div id="seqDisplay" class="sequence">${nums.map(n=>`<div class="seqitem">${n}</div>`).join("")}</div><div id="seqInfo" style="text-align:center;color:#c9c4ff;margin-top:15px">Signal uzatilmoqda…</div><div class="answerrow hidden" id="seqAnswer"><input id="seqInput" inputmode="numeric" autocomplete="off" placeholder="Raqamlarni ketma-ket yoz"><button class="btn" id="checkSeq">Tekshirish</button></div></div></div>`);let left=4+Math.ceil(len/2);cleanupTimer=setInterval(()=>{left--;$("seqInfo").textContent=`Yodlash vaqti: ${left} soniya` ;if(left<=0){clearInterval(cleanupTimer);$("seqDisplay").innerHTML=`<div class="seqitem" style="grid-column:1/-1">? ? ? ? ?</div>`;$("seqInfo").textContent="Endi ketma-ketlikni kiriting";$("seqAnswer").classList.remove("hidden");$("seqInput").focus()}},1000);$("checkSeq").onclick=()=>{const val=$("seqInput").value.replace(/\D/g,"");if(!val){toast("Avval javobni kiriting.",true);return}let correct=0;for(let i=0;i<Math.min(val.length,nums.length);i++)if(Number(val[i])===nums[i])correct++;result(Math.round(correct/nums.length*100),`To‘g‘ri o‘rindagi raqamlar: ${correct}/${nums.length}.`)}}
+function gameWords(){const stage=Number(data.currentStage)||1;const list=shuffle(WORDS).slice(0,6+Math.min(4,Math.floor(data.playedCount/5))+(stage>=50?Math.min(8,Math.floor((stage-50)/20)):0));modal("So‘zlar sandig‘i","So‘zlarni yodlab ol. Keyin esingda qolgan so‘zlarni vergul bilan ajratib yoz.",`<div class="gamearea"><div style="width:100%"><div id="wordDisplay" class="sequence">${list.map(w=>`<div class="seqitem" style="font-size:15px">${w}</div>`).join("")}</div><p id="wordInfo" style="text-align:center;color:#c9c4ff">Yodlash vaqti: 8 soniya</p><div id="wordAnswer" class="answerrow hidden"><input id="wordInput" placeholder="Esingda qolgan so‘zlar…"><button id="checkWords" class="btn">Tekshirish</button></div></div></div>`);let left=8;cleanupTimer=setInterval(()=>{left--;$("wordInfo").textContent=`Yodlash vaqti: ${left} soniya`;if(left<=0){clearInterval(cleanupTimer);$("wordDisplay").innerHTML=`<div class="seqitem" style="grid-column:1/-1">So‘zlar yashirildi</div>`;$("wordInfo").textContent="Yodingda qolgan so‘zlarni yoz";$("wordAnswer").classList.remove("hidden");$("wordInput").focus()}},1000);$("checkWords").onclick=()=>{const answer=$("wordInput").value.toLowerCase();const correct=list.filter(w=>answer.includes(w.toLowerCase())).length;result(Math.round(correct/list.length*100),`${list.length} so‘zdan ${correct} tasini eslading.`)}}
+
+function gameSingleWord(){
+ const pool=shuffle(WORDS);
+ const age=Number(data.userAge||18);
+ const band=age<=17?"easy":age<=35?"medium":"calm";
+ const word=pool.find(w=>String(w).length >= (band==="easy"?3:band==="medium"?4:4)) || pool[0];
+ const stage=Number(data.currentStage)||1;const seconds=Math.max(2,(age<=17?6:age<=35?5:8)-(stage>=50?Math.min(3,Math.floor((stage-50)/50)):0));
+ modal("Bitta so‘zni eslab yoz","Bitta so‘zga diqqat bilan qara. So‘z yashirilgach, uni xotiradan yozib kirit.",`<div class="gamearea"><div style="width:100%;text-align:center"><div id="singleWordDisplay" class="seqitem" style="font-size:clamp(28px,7vw,42px);padding:22px 28px;letter-spacing:.04em">${word}</div><p id="singleWordInfo" style="color:#c9c4ff;margin-top:15px">So‘zni yodlash: ${seconds} soniya</p><div id="singleWordAnswer" class="answerrow hidden"><input id="singleWordInput" autocomplete="off" autocapitalize="none" placeholder="Eslagan so‘zingni yoz" style="text-align:center"><button id="checkSingleWord" class="btn">Tekshirish</button></div></div></div>`);
+ let left=seconds;
+ cleanupTimer=setInterval(()=>{
+  left--;
+  const info=$("singleWordInfo");
+  if(info) info.textContent=left>0?`So‘zni yodlash: ${left} soniya`:"";
+  if(left<=0){
+   clearInterval(cleanupTimer);
+   $("singleWordDisplay").textContent="❔ So‘z yashirildi";
+   $("singleWordInfo").textContent="Endi esingda qolgan so‘zni yoz.";
+   $("singleWordAnswer").classList.remove("hidden");
+   $("singleWordInput").focus();
+  }
+ },1000);
+ const submit=()=>{
+  const input=$("singleWordInput");
+  if(!input || !input.value.trim()){toast("Avval eslagan so‘zingni yoz.",true);return}
+  const normalize=s=>s.toLocaleLowerCase("uz-UZ").trim().replace(/[.,!?;:]+$/g,"").replace(/\s+/g," ");
+  const ok=normalize(input.value)===normalize(word);
+  result(ok?100:0,ok?`To‘g‘ri! “${word}” so‘zini eslab qolding.`:`Bu safar mos kelmadi. To‘g‘ri so‘z: “${word}”. Keyingi urinishda yana sinab ko‘r.`);
+ };
+ $("checkSingleWord").onclick=submit;
+ $("singleWordInput").addEventListener("keydown",e=>{if(e.key==="Enter")submit()});
+}
+
+function gamePath(){const stage=Number(data.currentStage)||1;const dirs=["⬆️","➡️","⬇️","⬅️","↗️","↘️"];const seq=Array.from({length:5+Math.min(3,Math.floor(data.playedCount/5))+(stage>=50?Math.min(8,Math.floor((stage-50)/20)):0)},()=>dirs[Math.floor(Math.random()*4)]);modal("Yo‘lni eslab qol","Yo‘nalishlar ketma-ketligini kuzat. Keyin pastdagi belgilarni ayni tartibda tanla.",`<div class="gamearea"><div style="width:100%;text-align:center"><div id="pathSeq" class="sequence">${seq.map(s=>`<div class="seqitem">${s}</div>`).join("")}</div><p id="pathInfo" class="muted">Yo‘l 5 soniyada yashiriladi…</p><div id="pathChoices" class="answerrow hidden">${dirs.slice(0,4).map(s=>`<button class="choice" data-dir="${s}" style="font-size:22px">${s}</button>`).join("")}</div><div id="pathUser" class="sequence" style="margin-top:12px"></div></div></div>`);let left=5;cleanupTimer=setInterval(()=>{left--;$("pathInfo").textContent=`Kuzatish: ${left} soniya`;if(left<=0){clearInterval(cleanupTimer);$("pathSeq").innerHTML=`<div class="seqitem">Yo‘l yashirildi</div>`;$("pathInfo").textContent="Yo‘lni tikla";$("pathChoices").classList.remove("hidden")}},1000);let answer=[];document.querySelectorAll("[data-dir]").forEach(b=>b.onclick=()=>{if(answer.length>=seq.length)return;answer.push(b.dataset.dir);$("pathUser").innerHTML=answer.map(s=>`<div class="seqitem">${s}</div>`).join("");if(answer.length===seq.length){const correct=answer.filter((s,i)=>s===seq[i]).length;result(Math.round(correct/seq.length*100),`To‘g‘ri o‘rindagi yo‘nalishlar: ${correct}/${seq.length}.`)}})}
+function gameFocus(){const target=["⭐","⭐","🌙","⭐","🍀","⭐","🌙","⭐","🍀","🌙","⭐","🍀","⭐","🌙","⭐","🍀"];const goal="⭐";modal("Diqqat chaqnashi","Faqat ⭐ belgilarini tanla. Boshqa belgilarni bosma.",`<div class="gamearea"><div style="text-align:center"><div id="focusScore" style="margin-bottom:13px;color:#c9c4ff">Topilgan: 0</div><div class="cards" id="focusCards">${shuffle(target).map((s,i)=>`<button class="memorycard" data-focus="${s}" style="aspect-ratio:1">${s}</button>`).join("")}</div><p class="muted" style="font-size:11px">Eslatma: bu diqqat mashqi, klinik test emas.</p></div></div>`);let hits=0,miss=0,done=0;const btns=[...document.querySelectorAll("[data-focus]")];btns.forEach(b=>b.onclick=()=>{if(b.disabled)return;b.disabled=true;done++;if(b.dataset.focus===goal){hits++;b.classList.add("matched")}else{miss++;b.classList.add("wrong")}b.textContent=b.dataset.focus;$("focusScore").textContent=`To‘g‘ri: ${hits} · Xato: ${miss}`;if(done===btns.length){const score=Math.max(0,Math.round((hits/btns.length)*100));setTimeout(()=>result(score,`${hits} ta mos belgi topildi, ${miss} ta boshqa belgi tanlandi.`),300)}})}
+function gameStory(){const stories=[{t:"Malika kutubxonaga kirib, ko‘k kitobni oldi. So‘ng deraza yonidagi stolga o‘tirdi va uchta yulduz chizdi.",q:["Malika qayerga kirdi?","Kitob qanday rangda edi?","U nechta yulduz chizdi?"],a:["kutubxona","ko‘k","3"]},{t:"Jasur bog‘da sariq velosipedni ko‘rdi. U daraxt ostidan kalit topib, uyiga qaytdi.",q:["Velosiped qanday rangda edi?","Kalit qayerdan topildi?","Jasur qayerga qaytdi?"],a:["sariq","daraxt","uy"]},{t:"Qirg‘oqda uchta qayiq turardi. Dilnoza yashil sumkasiga xarita soldi va mayoq tomon yurdi.",q:["Qancha qayiq bor edi?","Sumka qanday rangda edi?","U qaysi tomonga yurdi?"],a:["3","yashil","mayoq"]}];const s=stories[Math.floor(Math.random()*stories.length)];modal("Hikoya ilgagi","Hikoyani diqqat bilan o‘qi. Keyin matn yashiriladi va uchta savolga javob berasan.",`<div class="gamearea"><div style="width:100%"><p id="storyText" style="font-size:17px;color:#f0efff">${s.t}</p><p id="storyInfo" style="text-align:center;color:#c9c4ff">Hikoyani yodlash: 7 soniya</p><div id="storyQuestions" class="hidden"></div></div></div>`);let left=7;cleanupTimer=setInterval(()=>{left--;$("storyInfo").textContent=`Hikoyani yodlash: ${left} soniya`;if(left<=0){clearInterval(cleanupTimer);$("storyText").textContent="Hikoya yopildi."; $("storyInfo").textContent="Savollarga javob ber";$("storyQuestions").classList.remove("hidden");$("storyQuestions").innerHTML=s.q.map((q,i)=>`<div style="margin-top:11px"><label style="display:block;font-size:13px;margin-bottom:5px">${q}</label><input data-story="${i}" style="width:100%;padding:10px;border-radius:10px;background:#ffffff0c;border:1px solid #ffffff2c;color:white"></div>`).join("")+`<div class="gamebuttons"><button id="checkStory" class="btn">Javoblarni tekshirish</button></div>`;$("checkStory").onclick=()=>{const vals=[...document.querySelectorAll("[data-story]")].map(x=>x.value.toLowerCase());const c=vals.filter((v,i)=>v&&s.a[i].split("|").some(a=>v.includes(a))).length;result(Math.round(c/3*100),`To‘g‘ri javoblar: ${c}/3.`)}}},1000)}
+function gameColor(){const pairs=shuffle([{c:"QIZIL",n:4,e:"🟥"},{c:"KO‘K",n:7,e:"🟦"},{c:"SARIQ",n:2,e:"🟨"},{c:"YASHIL",n:9,e:"🟩"}]).slice(0,3);modal("Rang kodi","Har bir rang yonidagi raqamni eslab qol. So‘ng ranglarga mos raqamlarni tanla.",`<div class="gamearea"><div style="width:100%;text-align:center"><div id="colorShow" class="sequence">${pairs.map(p=>`<div class="seqitem" style="font-size:15px">${p.e} ${p.c} <b>${p.n}</b></div>`).join("")}</div><p id="colorInfo" class="muted">Kod 5 soniyada yashiriladi…</p><div id="colorAnswer" class="hidden"></div></div></div>`);let left=5;cleanupTimer=setInterval(()=>{left--;$("colorInfo").textContent=`Yodlash: ${left} soniya`;if(left<=0){clearInterval(cleanupTimer);$("colorShow").innerHTML="";$("colorInfo").textContent="Ranglarga mos raqamlarni tanla";$("colorAnswer").classList.remove("hidden");$("colorAnswer").innerHTML=pairs.map(p=>`<div style="margin:10px 0"><span>${p.e} ${p.c}</span><div class="answerrow">${shuffle([p.n,...shuffle([1,2,3,4,5,6,7,8,9].filter(n=>n!==p.n)).slice(0,2)]).map(n=>`<button class="choice" data-color="${p.c}" data-num="${n}">${n}</button>`).join("")}</div></div>`).join("")+`<div class="gamebuttons"><button class="btn" id="checkColor">Tekshirish</button></div>`;const chosen={};document.querySelectorAll("[data-color]").forEach(b=>b.onclick=()=>{chosen[b.dataset.color]=+b.dataset.num;document.querySelectorAll(`[data-color="${b.dataset.color}"]`).forEach(x=>x.style.borderColor="");b.style.borderColor="#7ef0c1"});$("checkColor").onclick=()=>{const c=pairs.filter(p=>chosen[p.c]===p.n).length;result(Math.round(c/pairs.length*100),`To‘g‘ri rang kodi: ${c}/${pairs.length}.`) } }},1000)}
+function gameFaces(){const actors=shuffle([{a:"🦊",b:"🥕"},{a:"🐼",b:"🎋"},{a:"🐵",b:"🍌"},{a:"🐧",b:"🐟"},{a:"🐝",b:"🌼"}]).slice(0,4);modal("Qahramonlar albomi","Har bir qahramon qaysi buyum bilan bog‘langanini eslab qol.",`<div class="gamearea"><div style="width:100%;text-align:center"><div id="facesShow" class="sequence">${actors.map(x=>`<div class="seqitem">${x.a} → ${x.b}</div>`).join("")}</div><p id="facesInfo" class="muted">Juftliklar 6 soniyada yashiriladi…</p><div id="facesQuiz" class="hidden"></div></div></div>`);let left=6;cleanupTimer=setInterval(()=>{left--;$("facesInfo").textContent=`Yodlash: ${left} soniya`;if(left<=0){clearInterval(cleanupTimer);$("facesShow").innerHTML="";$("facesQuiz").classList.remove("hidden");let chosen={};$("facesInfo").textContent="Har bir qahramonga mos buyumni tanla";$("facesQuiz").innerHTML=actors.map(x=>`<div style="margin:9px 0;display:flex;align-items:center;gap:10px;justify-content:center"><span style="font-size:25px">${x.a}</span><select data-face="${x.a}" style="padding:9px;background:#202852;color:white;border:1px solid #ffffff30;border-radius:10px"><option value="">Buyumni tanla</option>${shuffle(actors.map(a=>a.b)).map(b=>`<option>${b}</option>`).join("")}</select></div>`).join("")+`<div class="gamebuttons"><button class="btn" id="checkFaces">Tekshirish</button></div>`;$("checkFaces").onclick=()=>{const vals=[...document.querySelectorAll("[data-face]")];const c=vals.filter(v=>actors.find(a=>a.a===v.dataset.face)?.b===v.value).length;result(Math.round(c/actors.length*100),`To‘g‘ri juftliklar: ${c}/${actors.length}.`)}}},1000)}
+
+// Campaign path: serpentine route, one won level unlocks the next.
+
+const STAGE_PROFILES=[
+ {name:"Kristall bog‘i",kind:"Ko‘rish xotirasi",desc:"Yorqin kristallar joylashuvini eslab qol.",goal:"Kataklar joyini yodlab, aynan shu tartibda tanla.",icon:"💎",bg:"linear-gradient(135deg,#1c2855,#3a2868)",game:"grid"},
+ {name:"Sehrli juftliklar",kind:"Assotsiativ xotira",desc:"Yashirilgan bir xil belgilarni juftlab top.",goal:"Kamroq urinishda barcha juftliklarni och.",icon:"🪄",bg:"linear-gradient(135deg,#183c4b,#33235d)",game:"pairs"},
+ {name:"Raqamlar minorasi",kind:"Ishchi xotira",desc:"Raqamlar ketma-ketligini ko‘rib, qayta kiriting.",goal:"Ketma-ketlikni to‘g‘ri eslab qol.",icon:"🔢",bg:"linear-gradient(135deg,#24375d,#164d59)",game:"sequence"},
+ {name:"So‘zlar sandig‘i",kind:"So‘z xotirasi",desc:"Qisqa vaqt ichida so‘zlarni yodlab ol.",goal:"Ko‘rgan so‘zlaringni eslab, keraklilarini tanla.",icon:"📚",bg:"linear-gradient(135deg,#47305d,#6a3b50)",game:"words"},
+ {name:"Yo‘l topuvchi",kind:"Fazoviy xotira",desc:"Yo‘l bo‘ylab yongan nuqtalarni eslab qol.",goal:"Ko‘rsatilgan marshrutni xatosiz takrorla.",icon:"🧭",bg:"linear-gradient(135deg,#174b4d,#23365e)",game:"path"},
+ {name:"Diqqat chaqnashi",kind:"Tanlab diqqat",desc:"Aralash belgilar ichidan faqat keraklisini top.",goal:"Maqsadli belgilarni tanla, chalg‘ituvchilardan saqlan.",icon:"⚡",bg:"linear-gradient(135deg,#553b1e,#5b2852)",game:"focus"},
+ {name:"Hikoya izlari",kind:"Mazmuniy xotira",desc:"Kichik voqeani o‘qib, tafsilotlarini eslab qol.",goal:"Hikoyadagi muhim faktlarni top.",icon:"📖",bg:"linear-gradient(135deg,#244c43,#34416e)",game:"story"},
+ {name:"Ranglar kodı",kind:"Ketma-ketlik xotirasi",desc:"Ranglar ketma-ketligini yodlab takrorla.",goal:"Ranglar tartibini adashtirmay qaytar.",icon:"🎨",bg:"linear-gradient(135deg,#542b56,#284b65)",game:"color"},
+ {name:"Qahramonlar albomi",kind:"Yuz va detal xotirasi",desc:"Qahramonlar va ularning belgilarini eslab qol.",goal:"Kimda qaysi belgi bo‘lganini aniqlang.",icon:"🧑‍🚀",bg:"linear-gradient(135deg,#24304f,#59406d)",game:"faces"}
+];
+function profileForStage(level){return STAGE_PROFILES[(level-1)%STAGE_PROFILES.length]}
+
+const CAMPAIGN_LEN=200;
+const CAMPAIGN_GAMES=["grid","pairs","sequence","words","path","focus","story","color","faces","singleword"];
+function getCampaignProgress(){return Math.max(0,Math.min(CAMPAIGN_LEN,Number(data.campaignProgress)||0))}
+function stageDifficulty(level){if(level<50)return {label:"O‘rganish",tier:1,detail:"Qoidalarni o‘rgan va xotirani mashq qil."};if(level<75)return {label:"Qiyin",tier:2,detail:"50-leveldan boshlab xotira yuklamasi oshadi."};if(level<100)return {label:"Juda qiyin",tier:3,detail:"Ko‘proq belgilar va uzunroq ketma-ketliklar."};if(level<150)return {label:"Ekspert",tier:4,detail:"Murakkab kombinatsiyalar va qisqaroq yodlash vaqti."};if(level<180)return {label:"Afsonaviy",tier:5,detail:"Uzoq ketma-ketliklar va diqqatni tez almashtirish."};return {label:"Final sinovi",tier:6,detail:"Eng murakkab xotira sinovlari. Shoshilmay diqqat bilan bajar."}}
+function routePositions(){return Array.from({length:CAMPAIGN_LEN},(_,i)=>[Math.floor(i/10),i%10])}
+function renderCampaign(){
+ const progress=getCampaignProgress();
+ $("pathBoard").innerHTML=Array.from({length:CAMPAIGN_LEN},(_,i)=>{
+  const n=i+1,done=n<=progress,current=n===progress+1,locked=n>progress+1;
+  return `<button class="pathcell ${done?"done":""} ${current?"current":""} ${locked?"locked":""}" data-level="${n}" ${locked?"disabled":""} aria-label="Level ${n}">${done?"✓":n%10===0?"🔑":n}</button>`;
+ }).join("");
+ $("campaignProgress").textContent=`${progress}/${CAMPAIGN_LEN} level`;
+ $("campaignHint").textContent=progress>=CAMPAIGN_LEN?"200-level yakunlandi! Mukofot bo‘limi ochildi.":`Keyingi: ${profileForStage(progress+1).name} · ${stageDifficulty(progress+1).label}`;
+ $("continueCampaign").textContent=progress>=CAMPAIGN_LEN?"Mukofotni ko‘rish 🎁":`Level ${progress+1} ni boshlash ↗`;
+ $("continueCampaign").onclick=()=>{if(getCampaignProgress()>=CAMPAIGN_LEN){showFinalReward();return}startCampaignLevel(getCampaignProgress()+1)};
+ document.querySelectorAll("[data-level]").forEach(b=>b.onclick=()=>{const n=+b.dataset.level;if(n<=getCampaignProgress()+1)startCampaignLevel(n)});
+ renderSecretWorld();
+}
+function showFinalReward(){
+ modal("🏆 200-LEVEL MUKOFOTI","Tabriklaymiz! Sen MEMORA LAB yo‘lini oxirigacha bosib o‘tding.",`<div class="reward-banner"><div style="font-size:36px">🎁</div><h3>30 000 so‘mlik vaucher</h3><p>Prototipda mukofot yutug‘i qayd etiladi. Haqiqiy vaucher berish yoki kartaga pul o‘tkazish avtomatik ishlamaydi — loyiha tashkilotchisi natijani tekshirishi, shartlarni tasdiqlashi va voyaga yetmagan foydalanuvchi uchun ota-ona/vasiy roziligini olishi kerak.</p><span class="stage-chip">Demo mukofot · pul o‘tkazilmagan</span></div><button class="btn" id="recordReward">Mukofot talabini demo tarzda qayd etish</button>`);
+ $("recordReward").onclick=()=>{data.rewardRequest={level:200,amount:30000,status:"demo-requested",date:new Date().toISOString()};save();modal("🎫 Talab qayd etildi","Bu faqat shu qurilmada saqlangan demo yozuv. Tashkilotchiga yuborilmadi va pul o‘tkazilmadi.",`<div class="result"><div class="badge">🎁</div><h3>30 000 so‘mlik mukofot talabi</h3><p>Haqiqiy tasdiqlash uchun server va tashkilotchi tekshiruvi kerak.</p></div>`)}
+}
+function gameSecretTrial(level){
+ currentGame="secrettrial";
+ const cfg={50:{title:"🧠 Xotira uyg‘onishi",kind:"visual",count:5,time:6},100:{title:"🔢 Yashirin ketma-ketlik",kind:"digits",count:7,time:7},150:{title:"🗝️ Sirli xonalar",kind:"words",count:7,time:8},200:{title:"🌟 Buyuk xotira sinovi",kind:"final",count:8,time:9}}[level];
+ const emojis=shuffle(["🦊","🌙","💎","🦋","🌈","🍀","⭐","🐉","🔮","🌻","🪐","🎈"]).slice(0,cfg.count);
+ const nums=Array.from({length:cfg.count},()=>Math.floor(Math.random()*9)+1);
+ const words=shuffle(["daryo","kitob","bulut","daraxt","oyna","yulduz","bahor","kalit","qush","gul","dengiz","quyosh"]).slice(0,cfg.count);
+ if(cfg.kind==="visual"){
+  const picked=new Set();
+  modal(cfg.title,"Belgilarni yodlab ol, keyin esingda qolganlarini tanla.",`<div class="gamearea"><div style="width:100%;text-align:center"><div id="trialShow" class="sequence">${emojis.map(x=>`<div class="seqitem" style="font-size:30px">${x}</div>`).join("")}</div><p id="trialInfo" class="muted">Yodlash: ${cfg.time} soniya</p><div id="trialAnswer" class="hidden"></div></div></div>`);
+  let left=cfg.time;cleanupTimer=setInterval(()=>{left--;$('trialInfo').textContent=`Yodlash: ${left} soniya`;if(left<=0){clearInterval(cleanupTimer);$('trialShow').innerHTML="";$('trialInfo').textContent="Eslagan belgilarni tanla";$('trialAnswer').classList.remove('hidden');$('trialAnswer').innerHTML=shuffle([...emojis,"🎯","🍎","🚀","🐳","🎵"]).map(x=>`<button class="choice" data-trial="${x}" style="font-size:25px;margin:4px">${x}</button>`).join("")+`<div class="gamebuttons"><button class="btn" id="trialCheck">Tekshirish</button></div>`;document.querySelectorAll('[data-trial]').forEach(b=>b.onclick=()=>{if(picked.has(b.dataset.trial)){picked.delete(b.dataset.trial);b.style.borderColor=""}else{picked.add(b.dataset.trial);b.style.borderColor="#7ef0c1"}});$('trialCheck').onclick=()=>{const c=emojis.filter(x=>picked.has(x)).length;result(Math.round(c/emojis.length*100),`Eslangan belgilar: ${c}/${emojis.length}.`)};}},1000);
+ }else if(cfg.kind==="digits"){
+  modal(cfg.title,"Raqamlarni tartibi bilan eslab qol va qayta yoz.",`<div class="gamearea"><div style="width:100%"><div id="trialShow" class="sequence">${nums.map(n=>`<div class="seqitem">${n}</div>`).join("")}</div><p id="trialInfo" class="muted" style="text-align:center">Yodlash: ${cfg.time} soniya</p><div id="trialAnswer" class="answerrow hidden"><input id="trialInput" inputmode="numeric" placeholder="Raqamlarni tartib bilan yoz"><button class="btn" id="trialCheck">Tekshirish</button></div></div></div>`);
+  let left=cfg.time;cleanupTimer=setInterval(()=>{left--;$('trialInfo').textContent=`Yodlash: ${left} soniya`;if(left<=0){clearInterval(cleanupTimer);$('trialShow').innerHTML="? ? ? ? ? ? ?";$('trialAnswer').classList.remove('hidden')}},1000);$('trialCheck').onclick=()=>{const val=$('trialInput').value.replace(/\D/g,"");let c=0;for(let i=0;i<Math.min(val.length,nums.length);i++)if(+val[i]===nums[i])c++;result(Math.round(c/nums.length*100),`To‘g‘ri o‘rindagi raqamlar: ${c}/${nums.length}.`)};
+ }else if(cfg.kind==="words"){
+  modal(cfg.title,"So‘zlarni yodlab, esingda qolganlarini yoz.",`<div class="gamearea"><div style="width:100%"><div id="trialShow" class="sequence">${words.map(w=>`<div class="seqitem" style="font-size:15px">${w}</div>`).join("")}</div><p id="trialInfo" class="muted" style="text-align:center">Yodlash: ${cfg.time} soniya</p><div id="trialAnswer" class="answerrow hidden"><input id="trialInput" placeholder="Eslagan so‘zlaring"><button class="btn" id="trialCheck">Tekshirish</button></div></div></div>`);
+  let left=cfg.time;cleanupTimer=setInterval(()=>{left--;$('trialInfo').textContent=`Yodlash: ${left} soniya`;if(left<=0){clearInterval(cleanupTimer);$('trialShow').innerHTML="So‘zlar yashirildi";$('trialAnswer').classList.remove('hidden')}},1000);$('trialCheck').onclick=()=>{const ans=$('trialInput').value.toLowerCase();const c=words.filter(w=>ans.includes(w)).length;result(Math.round(c/words.length*100),`Eslangan so‘zlar: ${c}/${words.length}.`)};
+ }else{
+  const mix=shuffle([...nums.map(String),...words.slice(0,4)]).slice(0,8);const expected=mix.join("|");
+  modal(cfg.title,"Yakuniy sinov: raqam va so‘zlar aralash ketma-ketligini yodla.",`<div class="gamearea"><div style="width:100%"><div id="trialShow" class="sequence">${mix.map(x=>`<div class="seqitem" style="font-size:15px">${x}</div>`).join("")}</div><p id="trialInfo" class="muted" style="text-align:center">Yodlash: ${cfg.time} soniya</p><div id="trialAnswer" class="answerrow hidden"><input id="trialInput" placeholder="Ketma-ketlikni vergul bilan yoz"><button class="btn" id="trialCheck">Yakunlash</button></div></div></div>`);
+  let left=cfg.time;cleanupTimer=setInterval(()=>{left--;$('trialInfo').textContent=`Yodlash: ${left} soniya`;if(left<=0){clearInterval(cleanupTimer);$('trialShow').innerHTML="Ketma-ketlik yashirildi";$('trialAnswer').classList.remove('hidden')}},1000);$('trialCheck').onclick=()=>{const vals=$('trialInput').value.toLowerCase().split(/[,\s]+/).filter(Boolean);const orig=expected.toLowerCase().split("|");let c=0;for(let i=0;i<Math.min(vals.length,orig.length);i++)if(vals[i]===orig[i])c++;result(Math.round(c/orig.length*100),`To‘g‘ri o‘rindagi elementlar: ${c}/${orig.length}.`)};
+ }
+}
+
+function startCampaignLevel(level){
+ if(level>CAMPAIGN_LEN){showFinalReward();return}
+ const special=[50,100,150,200].includes(level);
+ const profile=profileForStage(level), gid=profile.game, difficulty=stageDifficulty(level);
+ data.currentStage=level;
+ const ageSettings=ageBand(data.userAge||18);
+ modal(special?({50:"🧠 Xotira uyg‘onishi",100:"🔢 Yashirin ketma-ketlik",150:"🗝️ Sirli xonalar",200:"🌟 Buyuk xotira sinovi"}[level]):`${profile.icon} ${profile.name}`,`Level ${level} / ${CAMPAIGN_LEN} · ${difficulty.label}`,`<div class="stage-card" style="background:${profile.bg}"><strong>${special?"Maxsus sirli sinov: xotira, eslab qolish va diqqatni tekshir.":profile.desc}</strong><p>${special?"Oddiy bosqichlardan farqli maxsus topshiriq. Natija kamida 60% bo‘lsa bosqich ochiladi.":profile.goal}</p><span class="stage-chip">${profile.kind}</span><span class="stage-chip">${ageSettings.label}</span><span class="stage-chip">${difficulty.label}</span><p>${difficulty.detail}</p></div><p>${ageSettings.focus}. Kamida 60% natija bilan levelni yut. ${level<50?"1–49-levellar o‘rganish va moslashish uchun.": "Qiyinlik 50-leveldan boshlab oshiriladi."}</p>`,`<div class="gamebuttons"><button class="btn" id="beginStage">Sinovni boshlash →</button></div>`);
+ $("beginStage").onclick=()=>{
+  closeGame();
+  const oldResult=result;
+  result=function(score,detail){
+   oldResult(score,detail);
+   if(score>=60 && level===getCampaignProgress()+1){
+    data.campaignProgress=level;
+    if(data.avatar)data.avatarAge=(Number(data.avatarAge)||0)+1;
+    if(level%10===0){data.secretKeys=(Number(data.secretKeys)||0)+1}
+    if(level===CAMPAIGN_LEN)data.rewardUnlocked=true;
+    save();renderAvatar();renderCampaign();
+    if(level%10===0)toast("🔑 Sirli kalit olding!");
+    if(level===CAMPAIGN_LEN){setTimeout(()=>showFinalReward(),250)}
+   }
+  };
+  if(special)gameSecretTrial(level);else startGame(gid);
+  const originalClose=closeGame;
+  closeGame=function(){result=oldResult;originalClose();closeGame=originalClose};
+ };
+}
+function renderSecretWorld(){
+ const keys=Number(data.secretKeys)||0;
+ $("keyCount").textContent=`🔑 ${keys} kalit`;
+ const pets=[
+  {id:"fox",icon:"🦊",name:"Kristall tulki",cost:1,desc:"Tezlik va chaqqonlik timsoli."},
+  {id:"owl",icon:"🦉",name:"Tun boyo‘g‘lisi",cost:1,desc:"Donolik va xotira qo‘riqchisi."},
+  {id:"dragon",icon:"🐉",name:"Tuman ajdahosi",cost:2,desc:"Noyob sirli hamroh."},
+  {id:"lion",icon:"🦁",name:"Quyosh sheri",cost:3,desc:"Afsonaviy himoyachi."},
+  {id:"unicorn",icon:"🦄",name:"Oy yakkashoxi",cost:2,desc:"Sehrli olamning yorqin hamrohi."},
+  {id:"panda",icon:"🐼",name:"Bambuk qo‘riqchisi",cost:1,desc:"Sokinlik va sabr ramzi."}
+ ];
+ const owned=data.secretPets||[];
+ $("secretWorldContent").innerHTML=`<div class="secret-grid">${pets.map(p=>`<div class="secret-card"><div class="pet">${p.icon}</div><strong>${p.name}</strong><p class="muted">${p.desc}</p><small>${owned.includes(p.id)?"✅ Sening sheriging":`🔑 ${p.cost} kalit`}</small><button class="btn ${owned.includes(p.id)?"secondary":""}" data-pet="${p.id}" ${owned.includes(p.id)||keys<p.cost?"disabled":""}>${owned.includes(p.id)?"Olingan":"Sherikni olish"}</button></div>`).join("")}</div>`;
+ document.querySelectorAll("[data-pet]").forEach(b=>b.onclick=()=>{const p=pets.find(x=>x.id===b.dataset.pet);if(!p||keys<p.cost||owned.includes(p.id))return;data.secretKeys=keys-p.cost;data.secretPets=[...owned,p.id];save();renderSecretWorld();toast(`${p.name} senga sherik bo‘ldi!`)});
+}
+$("openSecretWorld").onclick=()=>{if((Number(data.secretKeys)||0)<1){toast("Sirli olam uchun avval level 10 ni yutib, kalit ol.");return}modal("🌌 Sirli olam ochildi","Kalitlaringni ishlatib, hayvon sheriklarni jamoangga qo‘sh.",`<p>Bu olamda kalitlar faqat o‘yin ichidagi buyumlar. Har 10 ta yangi level uchun bitta kalit olasan.</p><div class="secret-grid">${(data.secretPets||[]).map(id=>`<div class="secret-card">${({fox:"🦊",owl:"🦉",dragon:"🐉",lion:"🦁",unicorn:"🦄",panda:"🐼"})[id]||"🐾"}<p>${id}</p></div>`).join("")||"<p>Hali sherik olinmagan.</p>"}</div>`,`<button class="btn" id="secretShopOpen">Sheriklar do‘konini ko‘rish</button>`);$("secretShopOpen").onclick=()=>{closeGame();document.getElementById("secretWorldContent").scrollIntoView({behavior:"smooth",block:"center"})}}
+
+// Animated, responsive starfield; reduced motion preference is respected.
+(function starfield(){const canvas=$("stars"),ctx=canvas.getContext("2d");let w,h,dpr,stars=[];const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;function resize(){dpr=Math.min(window.devicePixelRatio||1,2);w=canvas.clientWidth;h=canvas.clientHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);stars=Array.from({length:Math.max(35,Math.floor(w*h/9000))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.3,a:Math.random()*.55+.15,s:Math.random()*.22+.04}))}function draw(){ctx.clearRect(0,0,w,h);for(const s of stars){ctx.beginPath();ctx.fillStyle=`rgba(225,232,255,${s.a})`;ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();if(!reduced){s.y-=s.s;if(s.y<0){s.y=h;s.x=Math.random()*w}}}if(!reduced)requestAnimationFrame(draw)}window.addEventListener("resize",()=>{resize();if(reduced)draw()});resize();draw()})();
+$("openVip").onclick=openVipShop;$("todayPill").textContent="✦ "+new Date().toLocaleDateString("uz-UZ",{day:"numeric",month:"long"});initWorld();renderStats();renderCampaign();renderAvatar();renderAgeBadge();if(!data.userAge)setTimeout(()=>openAgeSetup(),250);else if(!data.avatar)setTimeout(()=>openAvatarSetup(),250);
+
+// Five-level community checkpoint lobbies. Browser-only demo storage; no network chat.
+(function initCheckpointLobbies(){
+  const roomsEl = document.getElementById('lobbyRooms');
+  const chatLog = document.getElementById('lobbyChatLog');
+  const chatForm = document.getElementById('lobbyChatForm');
+  if(!roomsEl || !chatLog || !chatForm) return;
+  const STORAGE_KEY = 'memora_lab_lobby_messages_v1';
+  const NICK_KEY = 'memora_lab_lobby_nickname_v1';
+  let selectedRoom = 5;
+  let messages = [];
+  try { messages = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); if(!Array.isArray(messages)) messages=[]; } catch(e){ messages=[]; }
+  const nickInput = document.getElementById('lobbyNickname');
+  try { nickInput.value = localStorage.getItem(NICK_KEY) || ''; } catch(e){}
+  const safeText = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function renderRooms(){
+    roomsEl.innerHTML = '';
+    for(let level=5; level<=200; level+=5){
+      const b=document.createElement('button');
+      b.type='button'; b.className='lobby-room'+(selectedRoom===level?' active':'');
+      b.innerHTML='<strong>'+level+'</strong><br><span class="lobby-note">daraja</span>';
+      b.setAttribute('aria-pressed', String(selectedRoom===level));
+      b.addEventListener('click',()=>{selectedRoom=level;renderRooms();renderChat();});
+      roomsEl.appendChild(b);
+    }
+    document.getElementById('lobbyRoomTag').textContent=selectedRoom+'-daraja xonasi';
+  }
+  function renderChat(){
+    const list=messages.filter(m=>m.room===selectedRoom).slice(-80);
+    document.getElementById('chatCount').textContent=list.length+' xabar';
+    if(!list.length){chatLog.innerHTML='<p class="lobby-note">Bu xonada hali xabar yo‘q. Birinchi bo‘lib salom ber!</p>';return;}
+    chatLog.innerHTML=list.map(m=>'<div class="chat-msg"><b>'+safeText(m.nick)+' · '+safeText(m.time)+'</b><p>'+safeText(m.text)+'</p></div>').join('');
+    chatLog.scrollTop=chatLog.scrollHeight;
+  }
+  document.getElementById('saveLobbyNickname').addEventListener('click',()=>{
+    const nick=(nickInput.value||'').trim().slice(0,20);
+    if(!nick){document.getElementById('lobbyStatus').textContent='Avval taxallus yoz.';return;}
+    try{localStorage.setItem(NICK_KEY,nick);}catch(e){}
+    document.getElementById('lobbyStatus').textContent='Taxallus saqlandi: '+nick;
+  });
+  chatForm.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const input=document.getElementById('lobbyChatInput');
+    const value=(input.value||'').trim();
+    if(!value)return;
+    let nick=(nickInput.value||'').trim().slice(0,20);
+    if(!nick) nick='Mehmon';
+    const now=new Date();
+    messages.push({room:selectedRoom,nick,text:value.slice(0,240),time:now.toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'})});
+    messages=messages.slice(-1000);
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(messages));}catch(e){}
+    input.value='';renderChat();
+  });
+  renderRooms();renderChat();
+})();
+
+
+// Browser speech recognition: converts speech to text in the chat input.
+(function initVoiceInput(){
+ const button=document.getElementById('voiceInputBtn');
+ const input=document.getElementById('lobbyChatInput');
+ const status=document.getElementById('voiceInputStatus');
+ if(!button||!input||!status) return;
+ const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SpeechRecognition){
+   button.disabled=true;
+   status.textContent='Bu brauzer ovozni matnga aylantirishni qo‘llamasligi mumkin. Chrome brauzerida va HTTPS orqali sinab ko‘r.';
+   return;
+ }
+ let recognition=null, listening=false;
+ button.addEventListener('click',()=>{
+   if(listening){ try{recognition.stop();}catch(e){} return; }
+   try{
+     recognition=new SpeechRecognition();
+     recognition.lang='uz-UZ';
+     recognition.interimResults=true;
+     recognition.continuous=false;
+     const before=input.value;
+     button.classList.add('recording');
+     button.setAttribute('aria-pressed','true');
+     button.textContent='⏹️ Tinglashni to‘xtatish';
+     status.textContent='Tinglayapman… Gapir, matn xabar maydoniga tushadi.';
+     listening=true;
+     recognition.onresult=(event)=>{
+       let finalText='', interim='';
+       for(let i=event.resultIndex;i<event.results.length;i++){
+         const transcript=event.results[i][0].transcript;
+         if(event.results[i].isFinal) finalText+=transcript;
+         else interim+=transcript;
+       }
+       const spoken=(finalText||interim).trim();
+       if(spoken){
+         const prefix=before.trim();
+         input.value=(prefix?prefix+' ':'')+spoken;
+       }
+     };
+     recognition.onerror=(event)=>{
+       status.textContent=event.error==='not-allowed'?'Mikrofon ruxsati berilmadi. Brauzer sozlamalaridan ruxsat ber.':'Ovoz tanilmadi ('+event.error+'). Qayta urinib ko‘r.';
+     };
+     recognition.onend=()=>{
+       listening=false;
+       button.classList.remove('recording');
+       button.setAttribute('aria-pressed','false');
+       button.textContent='🎙️ Ovoz bilan yozish';
+       if(status.textContent.startsWith('Tinglayapman')) status.textContent=input.value.trim()?'Ovoz matnga aylantirildi. Yuborishdan oldin tekshir.':'Ovoz aniqlanmadi. Yana urinib ko‘r.';
+     };
+     recognition.start();
+   }catch(err){
+     listening=false;
+     button.classList.remove('recording');
+     button.setAttribute('aria-pressed','false');
+     button.textContent='🎙️ Ovoz bilan yozish';
+     status.textContent='Mikrofon ishga tushmadi. HTTPS va mikrofon ruxsatini tekshir.';
+   }
+ });
+})();
+
+</script>
+
+<script type="module">
+import { Room, RoomEvent, Track } from 'https://esm.sh/livekit-client@2.15.6';
+(() => {
+ const roomSelect=document.getElementById('liveVoiceRoom');
+ const nickInput=document.getElementById('liveVoiceNickname');
+ const joinBtn=document.getElementById('liveVoiceJoin');
+ const muteBtn=document.getElementById('liveVoiceMute');
+ const leaveBtn=document.getElementById('liveVoiceLeave');
+ const statusEl=document.getElementById('liveVoiceStatus');
+ const listEl=document.getElementById('liveVoiceParticipants');
+ const countEl=document.getElementById('liveVoiceCount');
+ if(!roomSelect||!joinBtn) return;
+ for(let level=5;level<=200;level+=5){const option=document.createElement('option');option.value=String(level);option.textContent=level+'-daraja xonasi';roomSelect.appendChild(option);}
+ try { nickInput.value=localStorage.getItem('memora_lab_lobby_nickname_v1')||''; } catch(e){}
+ let room=null, muted=false, joining=false;
+ const say=(message)=>{statusEl.textContent=message;};
+ const escapeText=(value)=>String(value||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+ function renderParticipants(){
+   if(!room){listEl.innerHTML='<li class="lobby-note">Hozircha ulanmagan.</li>';countEl.textContent='0/5';return;}
+   const participants=[room.localParticipant,...room.remoteParticipants.values()];
+   countEl.textContent=Math.min(participants.length,5)+'/5';
+   listEl.innerHTML='';
+   participants.forEach((participant)=>{
+     const li=document.createElement('li');
+     const name=participant.name||participant.identity||'O‘yinchi';
+     const isSelf=participant.identity===room.localParticipant.identity;
+     li.innerHTML='<span class="speaking-dot"></span><span>'+escapeText(name)+'</span>'+(isSelf?'<span class="self-label">(sen)</span>':'');
+     listEl.appendChild(li);
+   });
+ }
+ function attachAudio(track){
+   if(track.kind!==Track.Kind.Audio)return;
+   const element=track.attach(); element.autoplay=true; element.setAttribute('playsinline',''); element.dataset.memoraVoiceAudio='true'; document.body.appendChild(element);
+ }
+ function detachAudio(track){track.detach().forEach(el=>el.remove());}
+ function resetUi(){joinBtn.disabled=false;muteBtn.disabled=true;leaveBtn.disabled=true;muteBtn.textContent='🔇 Mikrofonni o‘chirish';muted=false;room=null;renderParticipants();}
+ async function leaveRoom(showMessage=true){
+   if(room){try{await room.disconnect();}catch(e){} }
+   document.querySelectorAll('[data-memora-voice-audio="true"]').forEach(el=>el.remove());
+   resetUi(); if(showMessage)say('Xonadan chiqding.');
+ }
+ joinBtn.addEventListener('click',async()=>{
+   if(joining||room)return;
+   const nickname=nickInput.value.trim();
+   if(!nickname){say('Avval taxallus yoz. Haqiqiy ism shart emas.');nickInput.focus();return;}
+   joining=true;joinBtn.disabled=true;say('Xavfsiz ulanish tokeni so‘ralmoqda…');
+   let newRoom=null;
+   try{
+     const level=Number(roomSelect.value);
+     const response=await fetch('/api/voice/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({level,nickname})});
+     const data=await response.json().catch(()=>({}));
+     if(!response.ok)throw new Error(data.error||'Token olish amalga oshmadi.');
+     newRoom=new Room({adaptiveStream:true,dynacast:true});
+     newRoom.on(RoomEvent.TrackSubscribed,(track)=>attachAudio(track));
+     newRoom.on(RoomEvent.TrackUnsubscribed,(track)=>detachAudio(track));
+     newRoom.on(RoomEvent.ParticipantConnected,renderParticipants);
+     newRoom.on(RoomEvent.ParticipantDisconnected,renderParticipants);
+     newRoom.on(RoomEvent.Disconnected,()=>{document.querySelectorAll('[data-memora-voice-audio="true"]').forEach(el=>el.remove());if(room===newRoom){resetUi();say('Aloqa uzildi. Qayta kirib ko‘r.');}});
+     say('LiveKit serveriga ulanmoqda…');
+     await newRoom.connect(data.url,data.token);
+     room=newRoom;
+     await room.localParticipant.setMicrophoneEnabled(true);
+     muteBtn.disabled=false;leaveBtn.disabled=false;joinBtn.disabled=true;
+     say('Ulanding! Mikrofon yoqilgan. Gapirish uchun qurilmang mikrofonidan foydalan.');
+     renderParticipants();
+     try{localStorage.setItem('memora_lab_lobby_nickname_v1',nickname);}catch(e){}
+   }catch(error){
+     if(newRoom){try{await newRoom.disconnect();}catch(e){}}
+     document.querySelectorAll('[data-memora-voice-audio="true"]').forEach(el=>el.remove());
+     resetUi();
+     const msg=error&&error.message?error.message:'Noma’lum xatolik.';
+     say(msg+' Agar server sozlanmagan bo‘lsa, README dagi LiveKit va .env qadamlarini bajar.');
+   }finally{joining=false;}
+ });
+ muteBtn.addEventListener('click',async()=>{
+   if(!room)return;
+   try{muted=!muted;await room.localParticipant.setMicrophoneEnabled(!muted);muteBtn.textContent=muted?'🎙️ Mikrofonni yoqish':'🔇 Mikrofonni o‘chirish';say(muted?'Mikrofon o‘chiq.':'Mikrofon yoqilgan.');}
+   catch(e){say('Mikrofonni boshqarib bo‘lmadi. Brauzer ruxsatini tekshir.');}
+ });
+ leaveBtn.addEventListener('click',()=>leaveRoom());
+ window.addEventListener('beforeunload',()=>{if(room)room.disconnect();});
+ fetch('/api/voice/status').then(r=>r.json()).then(data=>{if(!data.configured)say('Jonli ovoz kodi qo‘shildi, ammo server hali sozlanmagan. .env faylida LIVEKIT_URL, LIVEKIT_API_KEY va LIVEKIT_API_SECRET kerak.');else say('Server sozlangan. Xonaga kirish uchun taxallus yoz.');}).catch(()=>say('Backendga ulanib bo‘lmadi. Ilovani server orqali ishga tushir.'));
+})();
+</script>
+
+</body></html>
