@@ -8,5 +8,12 @@
   "display": "standalone",
   "background_color": "#10152c",
   "theme_color": "#10152c",
-  "description": "MEMORA LAB — ovozli muloqot va interaktiv o‘rganish ilovasi."
+  "description": "MEMORA LAB — ovozli muloqot va interaktiv o‘rganish ilovasi.",
+  "icons": [
+    {
+      "src": "/Square150x150Logo.scale-200.png",
+      "sizes": "300x300",
+      "type": "image/png"
+    }
+  ]
 }
